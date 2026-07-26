@@ -64,7 +64,10 @@ func TestAuthorizationTables(t *testing.T) {
 	require.Nil(t, CapabilitiesFor("chat.whisper"))
 
 	require.Equal(t, DurabilityJetStream, DurabilityFor(EventChatMessage))
-	require.Equal(t, DurabilityCore, DurabilityFor(EventCommandResult))
+	// Command results are durable: they carry the reason a command was rejected,
+	// which is an audit record, and a core-NATS result published while the
+	// issuing CLI has already exited would be lost with no way to recover it.
+	require.Equal(t, DurabilityJetStream, DurabilityFor(EventCommandResult))
 	require.Equal(t, Durability(""), DurabilityFor("chat.whisper"))
 }
 
@@ -120,8 +123,14 @@ func TestStreamsFor(t *testing.T) {
 	require.Equal(t, 90*24*time.Hour, events.MaxAge)
 	require.Equal(t, DiscardOld, events.Discard)
 	require.Equal(t, 2*time.Hour, events.DuplicateWindow)
+	// conductor_result is bound to OL_EVENTS rather than OL_COMMANDS: command
+	// results carry rejection reasons (quota exhaustion, capability shortfall,
+	// policy denial) that belong in the audit record, and they may have several
+	// observers. OL_COMMANDS uses workqueue retention, which deletes a message
+	// once any one consumer acks it, so it is the wrong home for them.
 	require.Equal(t, []string{
 		"ol.v1.tenant.acme.workspace.platform.audit.>",
+		"ol.v1.tenant.acme.workspace.platform.conductor.*.result.*.>",
 		"ol.v1.tenant.acme.workspace.platform.thread.*.event.>",
 	}, events.Subjects)
 

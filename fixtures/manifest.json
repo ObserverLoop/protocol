@@ -115,7 +115,7 @@
       "type": "command.result",
       "schema": "schemas/payload/command.result.json",
       "subject_class": "conductor_result",
-      "durability": "core",
+      "durability": "jetstream",
       "trust_domains": [
         "tenant"
       ],

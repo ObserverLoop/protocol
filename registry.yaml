@@ -26,7 +26,7 @@ subject_classes:
 # A subject class named by no stream carries only `durability: core` events.
 streams:
   - name: OL_EVENTS
-    subject_classes: [thread, audit]
+    subject_classes: [thread, audit, conductor_result]
     retention: limits
     max_age: 2160h # 90 days
     discard: old
@@ -96,7 +96,7 @@ events:
   - type: command.result
     schema: schemas/payload/command.result.json
     subject_class: conductor_result
-    durability: core
+    durability: jetstream
     trust_domains: [tenant]
     capabilities: [command.execute]
 

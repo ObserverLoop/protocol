@@ -37,6 +37,7 @@ var streamTemplates = []streamTemplate{
 		name: "OL_EVENTS_{workspace_id}",
 		subjects: []string{
 			"ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.audit.>",
+			"ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.*.result.*.>",
 			"ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.thread.*.event.>",
 		},
 		retention:       RetentionLimits,

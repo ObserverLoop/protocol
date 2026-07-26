@@ -78,7 +78,7 @@ var eventDurability = map[EventType]Durability{
 	EventAuditSignature:      DurabilityJetStream,
 	EventChatMessage:         DurabilityJetStream,
 	EventCommandRequested:    DurabilityJetStream,
-	EventCommandResult:       DurabilityCore,
+	EventCommandResult:       DurabilityJetStream,
 	EventDecisionRecord:      DurabilityJetStream,
 	EventPermissionRequested: DurabilityJetStream,
 	EventPermissionResolved:  DurabilityJetStream,

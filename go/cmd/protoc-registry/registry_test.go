@@ -71,16 +71,20 @@ func TestLoadRegistryRejects(t *testing.T) {
 			new:  "  - type: chat.message",
 			want: "declared twice",
 		},
+		// Every subject class is currently bound to exactly one stream and every
+		// event is jetstream, so both directions of the durability invariant have
+		// to be provoked synthetically. Anchors include the type line because
+		// "durability: jetstream" alone is not unique.
 		{
 			name: "core event bound to a stream",
-			old:  "    subject_class: conductor_result\n    durability: core",
-			new:  "    subject_class: conductor_result\n    durability: jetstream",
-			want: "bound to no stream",
+			old:  "  - type: chat.message\n    schema: schemas/payload/chat.message.json\n    subject_class: thread\n    durability: jetstream",
+			new:  "  - type: chat.message\n    schema: schemas/payload/chat.message.json\n    subject_class: thread\n    durability: core",
+			want: "bound to stream",
 		},
 		{
 			name: "jetstream event on an unbound class",
-			old:  "    subject_classes: [conductor_command]",
-			new:  "    subject_classes: [conductor_result]",
+			old:  "    subject_classes: [thread, audit, conductor_result]",
+			new:  "    subject_classes: [thread, conductor_result]",
 			want: "bound to no stream",
 		},
 		{
