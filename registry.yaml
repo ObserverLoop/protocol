@@ -1,0 +1,136 @@
+# The event registry — the one source of truth.
+#
+# This is the only hand-written enumeration in the repository. Event type
+# constants, subject builders, JetStream stream specifications, the trust-domain
+# and capability authorisation tables, and the conformance manifest are all
+# generated from this file by cmd/protoc-registry. Adding an event type is one
+# entry here plus one schema file plus one fixture; nothing else is hand-edited.
+#
+# `version` is the protocol MAJOR.MINOR. The subject root carries MAJOR only.
+version: "1.0"
+
+# A subject class is a template. Every token in braces is a validated identifier
+# (protocol.ParseIdentifier), except {type}, which is the registry type token and
+# is therefore the only token that may contain a dot. {type} is always last.
+subject_classes:
+  thread: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.thread.{thread_id}.event.{type}
+  conductor_command: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.command.{type}
+  conductor_result: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.result.{command_id}.{type}
+  audit: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.audit.{type}
+
+# Stream subject bindings are derived from the subject classes, never written by
+# hand. The generator substitutes tenant and workspace, replaces every other
+# interpolated token with a single-token wildcard, and replaces the trailing
+# {type} with a multi-token wildcard. `name` is suffixed with the workspace.
+#
+# A subject class named by no stream carries only `durability: core` events.
+streams:
+  - name: OL_EVENTS
+    subject_classes: [thread, audit]
+    retention: limits
+    max_age: 2160h # 90 days
+    discard: old
+    duplicate_window: 2h
+  - name: OL_COMMANDS
+    subject_classes: [conductor_command]
+    retention: workqueue
+    max_age: 24h
+    discard: old
+    duplicate_window: 2h
+
+events:
+  - type: agent.lifecycle
+    schema: schemas/payload/agent.lifecycle.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [agent.lifecycle]
+
+  - type: audit.incident
+    schema: schemas/payload/audit.incident.json
+    subject_class: audit
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [audit.write]
+
+  - type: audit.schema
+    schema: schemas/payload/audit.schema.json
+    subject_class: audit
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [audit.write]
+
+  - type: audit.security
+    schema: schemas/payload/audit.security.json
+    subject_class: audit
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [audit.write]
+
+  - type: audit.signature
+    schema: schemas/payload/audit.signature.json
+    subject_class: audit
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [audit.write]
+
+  - type: chat.message
+    schema: schemas/payload/chat.message.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant, saas-attested]
+    capabilities: [thread.write]
+
+  # The SaaS attestation key may issue commands on behalf of an authenticated
+  # human; the envelope then carries payload.actor.
+  - type: command.requested
+    schema: schemas/payload/command.requested.json
+    subject_class: conductor_command
+    durability: jetstream
+    trust_domains: [tenant, saas-attested]
+    capabilities: [command.issue]
+
+  # Core, not JetStream: the JetStream topology binds no stream to
+  # conductor.*.result.>. A result is a request-scoped reply; the durable record
+  # of what happened is the thread and audit event stream.
+  - type: command.result
+    schema: schemas/payload/command.result.json
+    subject_class: conductor_result
+    durability: core
+    trust_domains: [tenant]
+    capabilities: [command.execute]
+
+  - type: decision.record
+    schema: schemas/payload/decision.record.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [thread.write]
+
+  - type: permission.requested
+    schema: schemas/payload/permission.requested.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [interaction.request]
+
+  - type: permission.resolved
+    schema: schemas/payload/permission.resolved.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant, saas-attested]
+    capabilities: [interaction.resolve]
+
+  - type: question.requested
+    schema: schemas/payload/question.requested.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [interaction.request]
+
+  - type: question.resolved
+    schema: schemas/payload/question.resolved.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant, saas-attested]
+    capabilities: [interaction.resolve]
