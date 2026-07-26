@@ -1,0 +1,293 @@
+{
+  "version": "1.0",
+  "events": [
+    {
+      "type": "agent.lifecycle",
+      "schema": "schemas/payload/agent.lifecycle.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "agent.lifecycle"
+      ],
+      "fixtures": [
+        "fixtures/valid/agent.lifecycle.running.json"
+      ]
+    },
+    {
+      "type": "audit.incident",
+      "schema": "schemas/payload/audit.incident.json",
+      "subject_class": "audit",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "audit.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/audit.incident.json"
+      ]
+    },
+    {
+      "type": "audit.schema",
+      "schema": "schemas/payload/audit.schema.json",
+      "subject_class": "audit",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "audit.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/audit.schema.json"
+      ]
+    },
+    {
+      "type": "audit.security",
+      "schema": "schemas/payload/audit.security.json",
+      "subject_class": "audit",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "audit.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/audit.security.json",
+        "fixtures/valid/audit.security.key-registered.json"
+      ]
+    },
+    {
+      "type": "audit.signature",
+      "schema": "schemas/payload/audit.signature.json",
+      "subject_class": "audit",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "audit.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/audit.signature.json"
+      ]
+    },
+    {
+      "type": "chat.message",
+      "schema": "schemas/payload/chat.message.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant",
+        "saas-attested"
+      ],
+      "capabilities": [
+        "thread.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/chat.message.agent.json",
+        "fixtures/valid/chat.message.human.json",
+        "fixtures/valid/chat.message.saas-attested.json"
+      ]
+    },
+    {
+      "type": "command.requested",
+      "schema": "schemas/payload/command.requested.json",
+      "subject_class": "conductor_command",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant",
+        "saas-attested"
+      ],
+      "capabilities": [
+        "command.issue"
+      ],
+      "fixtures": [
+        "fixtures/valid/command.requested.json"
+      ]
+    },
+    {
+      "type": "command.result",
+      "schema": "schemas/payload/command.result.json",
+      "subject_class": "conductor_result",
+      "durability": "core",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "command.execute"
+      ],
+      "fixtures": [
+        "fixtures/valid/command.result.failed.json",
+        "fixtures/valid/command.result.json"
+      ]
+    },
+    {
+      "type": "decision.record",
+      "schema": "schemas/payload/decision.record.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "thread.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/decision.record.json"
+      ]
+    },
+    {
+      "type": "permission.requested",
+      "schema": "schemas/payload/permission.requested.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "interaction.request"
+      ],
+      "fixtures": [
+        "fixtures/valid/permission.requested.json"
+      ]
+    },
+    {
+      "type": "permission.resolved",
+      "schema": "schemas/payload/permission.resolved.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant",
+        "saas-attested"
+      ],
+      "capabilities": [
+        "interaction.resolve"
+      ],
+      "fixtures": [
+        "fixtures/valid/permission.resolved.allowed.json",
+        "fixtures/valid/permission.resolved.expired.json"
+      ]
+    },
+    {
+      "type": "question.requested",
+      "schema": "schemas/payload/question.requested.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "interaction.request"
+      ],
+      "fixtures": [
+        "fixtures/valid/question.requested.json"
+      ]
+    },
+    {
+      "type": "question.resolved",
+      "schema": "schemas/payload/question.resolved.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant",
+        "saas-attested"
+      ],
+      "capabilities": [
+        "interaction.resolve"
+      ],
+      "fixtures": [
+        "fixtures/valid/question.resolved.json"
+      ]
+    }
+  ],
+  "invalid": [
+    {
+      "fixture": "fixtures/invalid/conductor-id-without-epoch.json",
+      "reason": "conductor_epoch is the fencing token and is required whenever source_conductor_id is present"
+    },
+    {
+      "fixture": "fixtures/invalid/delegation-chain-too-deep.json",
+      "reason": "maximum delegation depth below a root is two"
+    },
+    {
+      "fixture": "fixtures/invalid/identifier-too-long.json",
+      "reason": "identifiers are bounded at 63 bytes"
+    },
+    {
+      "fixture": "fixtures/invalid/identifier-uppercase.json",
+      "reason": "the identifier grammar is lowercase only"
+    },
+    {
+      "fixture": "fixtures/invalid/identifier-with-dot.json",
+      "reason": "a dot in an identifier would add a subject token"
+    },
+    {
+      "fixture": "fixtures/invalid/identifier-with-wildcard.json",
+      "reason": "a NATS wildcard in an identifier would make subject authorisation unsound"
+    },
+    {
+      "fixture": "fixtures/invalid/malformed-version.json",
+      "reason": "protocol_version is not MAJOR.MINOR"
+    },
+    {
+      "fixture": "fixtures/invalid/missing-payload.json",
+      "reason": "payload is required and is validated against the schema for event_type"
+    },
+    {
+      "fixture": "fixtures/invalid/missing-signature.json",
+      "reason": "signature is required on every envelope"
+    },
+    {
+      "fixture": "fixtures/invalid/negative-sequence.json",
+      "reason": "sequence is a monotonic counter and is never negative"
+    },
+    {
+      "fixture": "fixtures/invalid/payload-missing-required-field.json",
+      "reason": "chat.message requires text"
+    },
+    {
+      "fixture": "fixtures/invalid/payload-reasoning-property.json",
+      "reason": "no payload may carry reasoning content; the schema has nowhere to put it"
+    },
+    {
+      "fixture": "fixtures/invalid/payload-unknown-property.json",
+      "reason": "every payload root is closed, so an unknown property is a violation"
+    },
+    {
+      "fixture": "fixtures/invalid/payload-wrong-enum.json",
+      "reason": "role is constrained to human, agent, or system"
+    },
+    {
+      "fixture": "fixtures/invalid/short-signature.json",
+      "reason": "an Ed25519 signature is 64 bytes, 86 base64url characters"
+    },
+    {
+      "fixture": "fixtures/invalid/timestamp-with-offset.json",
+      "reason": "occurred_at is UTC; an offset would canonicalise differently"
+    },
+    {
+      "fixture": "fixtures/invalid/timestamp-without-milliseconds.json",
+      "reason": "occurred_at is RFC 3339 UTC at exactly millisecond precision, because it is inside the signed canonical form"
+    },
+    {
+      "fixture": "fixtures/invalid/unknown-event-type.json",
+      "reason": "event_type is in no registry entry, so no payload schema exists for it"
+    },
+    {
+      "fixture": "fixtures/invalid/unknown-trust-domain.json",
+      "reason": "trust_domain is closed to tenant and saas-attested"
+    },
+    {
+      "fixture": "fixtures/invalid/unsupported-major.json",
+      "reason": "protocol_version declares a MAJOR this binding does not implement; an unknown MAJOR is rejected while an unknown MINOR is accepted"
+    }
+  ],
+  "signing_key": "fixtures/signing/key.json",
+  "signing_vectors": "fixtures/signing/vectors.json"
+}

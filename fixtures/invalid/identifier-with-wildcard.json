@@ -1,0 +1,23 @@
+{
+  "envelope": {
+    "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+    "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+    "delegation_chain": [],
+    "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e11",
+    "event_type": "chat.message",
+    "occurred_at": "2026-07-26T12:00:11.000Z",
+    "payload": {
+      "role": "human",
+      "text": "Ship the release notes."
+    },
+    "protocol_version": "1.0",
+    "sequence": 11,
+    "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+    "tenant_id": "acme*",
+    "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+    "trust_domain": "tenant",
+    "workspace_id": "platform"
+  },
+  "reason": "a NATS wildcard in an identifier would make subject authorisation unsound"
+}

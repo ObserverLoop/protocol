@@ -1,0 +1,594 @@
+[
+  {
+    "name": "agent.lifecycle.running",
+    "fixture": "fixtures/valid/agent.lifecycle.running.json",
+    "event_type": "agent.lifecycle",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTE0IiwiZXZlbnRfdHlwZSI6ImFnZW50LmxpZmVjeWNsZSIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxNC4wMDBaIiwicGF5bG9hZCI6eyJhZ2VudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MiIsImRlZmluaXRpb25fZGlnZXN0Ijoic2hhMjU2OmNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2RjZGNkY2QiLCJoYXJuZXNzIjoiY2xhdWRlLWNvZGUiLCJzdGF0ZSI6InJ1bm5pbmcifSwicHJvdG9jb2xfdmVyc2lvbiI6IjEuMCIsInNlcXVlbmNlIjoxNCwic2lnbmVyX2tleV9pZCI6Ik5ZTTVSTFJKQjZLMkJENVJFWjJXWDc1SERWVUxYQVc1QkFZSlI2RjNDTFZPWUROMzdRWlEiLCJzb3VyY2VfYWdlbnRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTIiLCJ0ZW5hbnRfaWQiOiJhY21lIiwidGhyZWFkX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkwIiwidHJ1c3RfZG9tYWluIjoidGVuYW50Iiwid29ya3NwYWNlX2lkIjoicGxhdGZvcm0ifQ==",
+    "canonical_sha256": "21e9fdecf0507ed3b0f46bf6b670841f6fedd39c11cb0c5b8a9cd61e1eb96475",
+    "signature": "OQXwqv6e1YOpS2P3Kifvm5qxzH_yHhDeQrGCJNAwNcMoSrT73A6RrI0tBZPxQCsh-loKNd-QizQrl53GbvP6CA",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e14",
+      "event_type": "agent.lifecycle",
+      "occurred_at": "2026-07-26T12:00:14.000Z",
+      "payload": {
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "definition_digest": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+        "harness": "claude-code",
+        "state": "running"
+      },
+      "protocol_version": "1.0",
+      "sequence": 14,
+      "signature": "OQXwqv6e1YOpS2P3Kifvm5qxzH_yHhDeQrGCJNAwNcMoSrT73A6RrI0tBZPxQCsh-loKNd-QizQrl53GbvP6CA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "audit.incident",
+    "fixture": "fixtures/valid/audit.incident.json",
+    "event_type": "audit.incident",
+    "canonical_base64": "eyJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTI0IiwiZXZlbnRfdHlwZSI6ImF1ZGl0LmluY2lkZW50Iiwib2NjdXJyZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjI0LjAwMFoiLCJwYXlsb2FkIjp7ImRldGFpbCI6eyJleHBlY3RlZCI6MTMsIm9ic2VydmVkIjoxNX0sImluY2lkZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTg1Iiwib2ZmZW5kaW5nX2V2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTEyIiwicmVhc29uIjoic2VxdWVuY2VfZ2FwIiwic2V2ZXJpdHkiOiJ3YXJuaW5nIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjQsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2NvbmR1Y3Rvcl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MyIsInRlbmFudF9pZCI6ImFjbWUiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "4495eca305febb0f1306afa7f68e6f42c2b65104f297cce869561f684273809b",
+    "signature": "xMOojaYgZzOpGxXD9a6NQB2WxexChN72l4xQB4rUzk_L5IeWkzdh5UwqAhhtcim_P3bKo1jC3CkoOHdwisC6Dg",
+    "envelope": {
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e24",
+      "event_type": "audit.incident",
+      "occurred_at": "2026-07-26T12:00:24.000Z",
+      "payload": {
+        "detail": {
+          "expected": 13,
+          "observed": 15
+        },
+        "incident_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e85",
+        "offending_event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e12",
+        "reason": "sequence_gap",
+        "severity": "warning"
+      },
+      "protocol_version": "1.0",
+      "sequence": 24,
+      "signature": "xMOojaYgZzOpGxXD9a6NQB2WxexChN72l4xQB4rUzk_L5IeWkzdh5UwqAhhtcim_P3bKo1jC3CkoOHdwisC6Dg",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "audit.schema",
+    "fixture": "fixtures/valid/audit.schema.json",
+    "event_type": "audit.schema",
+    "canonical_base64": "eyJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTI1IiwiZXZlbnRfdHlwZSI6ImF1ZGl0LnNjaGVtYSIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoyNS4wMDBaIiwicGF5bG9hZCI6eyJvYnNlcnZlZF9wcm90b2NvbF92ZXJzaW9uIjoiMi4wIiwib2ZmZW5kaW5nX2V2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTEyIiwicmVhc29uIjoidW5zdXBwb3J0ZWRfbWFqb3IiLCJzdWJqZWN0Ijoib2wudjEudGVuYW50LmFjbWUud29ya3NwYWNlLnBsYXRmb3JtLnRocmVhZC4wMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTAuZXZlbnQuY2hhdC5tZXNzYWdlIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjUsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2NvbmR1Y3Rvcl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MyIsInRlbmFudF9pZCI6ImFjbWUiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "61dbd0a6beb8eeb8889bd2d1108c96e60767f8854834e04571e11e66334ccb2c",
+    "signature": "FtA0JagTPKMfRw_LFRN1h_i3LVU_W03UX_rYWneiOIpussFrsS_W3Q8aB8lKI3MZs142IUJwoUCYKI1TmqISAA",
+    "envelope": {
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e25",
+      "event_type": "audit.schema",
+      "occurred_at": "2026-07-26T12:00:25.000Z",
+      "payload": {
+        "observed_protocol_version": "2.0",
+        "offending_event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e12",
+        "reason": "unsupported_major",
+        "subject": "ol.v1.tenant.acme.workspace.platform.thread.0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90.event.chat.message"
+      },
+      "protocol_version": "1.0",
+      "sequence": 25,
+      "signature": "FtA0JagTPKMfRw_LFRN1h_i3LVU_W03UX_rYWneiOIpussFrsS_W3Q8aB8lKI3MZs142IUJwoUCYKI1TmqISAA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "audit.security",
+    "fixture": "fixtures/valid/audit.security.json",
+    "event_type": "audit.security",
+    "canonical_base64": "eyJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTI3IiwiZXZlbnRfdHlwZSI6ImF1ZGl0LnNlY3VyaXR5Iiwib2NjdXJyZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjI3LjAwMFoiLCJwYXlsb2FkIjp7ImRldGFpbCI6eyJza2V3X3NlY29uZHMiOjQyMX0sIm9jY3VycmVuY2VzIjozLCJyZWFzb24iOiJjbG9ja19za2V3In0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjcsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2NvbmR1Y3Rvcl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MyIsInRlbmFudF9pZCI6ImFjbWUiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "7be1a007cd0bd9a873111b82a86ecdae8cb2af92391bd39942082874496b8df0",
+    "signature": "vl1RwjpYvOu5QrtJM56y4-0d2M25PZdI09bO12btjFdHEI3rH8FiOUosnJVkHN29vrvA4ZPw86xunUb9KvfMDQ",
+    "envelope": {
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e27",
+      "event_type": "audit.security",
+      "occurred_at": "2026-07-26T12:00:27.000Z",
+      "payload": {
+        "detail": {
+          "skew_seconds": 421
+        },
+        "occurrences": 3,
+        "reason": "clock_skew"
+      },
+      "protocol_version": "1.0",
+      "sequence": 27,
+      "signature": "vl1RwjpYvOu5QrtJM56y4-0d2M25PZdI09bO12btjFdHEI3rH8FiOUosnJVkHN29vrvA4ZPw86xunUb9KvfMDQ",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "audit.security.key-registered",
+    "fixture": "fixtures/valid/audit.security.key-registered.json",
+    "event_type": "audit.security",
+    "canonical_base64": "eyJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTI4IiwiZXZlbnRfdHlwZSI6ImF1ZGl0LnNlY3VyaXR5Iiwib2NjdXJyZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjI4LjAwMFoiLCJwYXlsb2FkIjp7InJlYXNvbiI6ImtleV9yZWdpc3RlcmVkIiwic3ViamVjdF9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjgsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2NvbmR1Y3Rvcl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MyIsInRlbmFudF9pZCI6ImFjbWUiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "38af9249114b9b9a8787c48dfd07b0ed0052de94da0647d5f7e515ebad29840d",
+    "signature": "Z6qMJME25JBimIY9sxXflmBDk76BYUQGUnhAKLDBCwLjgbF7q-xpOnMEWWZm3FLL6xRVf8k7BEYaWXjePko1Bg",
+    "envelope": {
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e28",
+      "event_type": "audit.security",
+      "occurred_at": "2026-07-26T12:00:28.000Z",
+      "payload": {
+        "reason": "key_registered",
+        "subject_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ"
+      },
+      "protocol_version": "1.0",
+      "sequence": 28,
+      "signature": "Z6qMJME25JBimIY9sxXflmBDk76BYUQGUnhAKLDBCwLjgbF7q-xpOnMEWWZm3FLL6xRVf8k7BEYaWXjePko1Bg",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "audit.signature",
+    "fixture": "fixtures/valid/audit.signature.json",
+    "event_type": "audit.signature",
+    "canonical_base64": "eyJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTI2IiwiZXZlbnRfdHlwZSI6ImF1ZGl0LnNpZ25hdHVyZSIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoyNi4wMDBaIiwicGF5bG9hZCI6eyJkZXRhaWwiOiJkZWxlZ2F0aW9uIG5vdCBwcmVzZW50IGluIHRoZSBsb2NhbCBrZXkgc3RvcmUiLCJvZmZlbmRpbmdfZXZlbnRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlMTIiLCJyZWFzb24iOiJ1bnJlc29sdmFibGVfZGVsZWdhdGlvbiIsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjYsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2NvbmR1Y3Rvcl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MyIsInRlbmFudF9pZCI6ImFjbWUiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "e3054909032c0fb91724c06d9708498cf0b8ba645e66698f6d3cce85f0b0aafa",
+    "signature": "JGTemEYtrZxKrSYx8CJ3cTpe-KWqO2a224ig0lWOvwpw3rxy_7Uc9rTSKnqSAqkmCW0xN2MHsfL7Y-VYzldbCQ",
+    "envelope": {
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e26",
+      "event_type": "audit.signature",
+      "occurred_at": "2026-07-26T12:00:26.000Z",
+      "payload": {
+        "detail": "delegation not present in the local key store",
+        "offending_event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e12",
+        "reason": "unresolvable_delegation",
+        "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ"
+      },
+      "protocol_version": "1.0",
+      "sequence": 26,
+      "signature": "JGTemEYtrZxKrSYx8CJ3cTpe-KWqO2a224ig0lWOvwpw3rxy_7Uc9rTSKnqSAqkmCW0xN2MHsfL7Y-VYzldbCQ",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "chat.message.agent",
+    "fixture": "fixtures/valid/chat.message.agent.json",
+    "event_type": "chat.message",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNhdXNhdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UxMSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVmaW5pdGlvbl9kaWdlc3QiOiJzaGEyNTY6YWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYmFiYWJhYiIsImRlbGVnYXRpb25fY2hhaW4iOltdLCJldmVudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UxMiIsImV2ZW50X3R5cGUiOiJjaGF0Lm1lc3NhZ2UiLCJvY2N1cnJlZF9hdCI6IjIwMjYtMDctMjZUMTI6MDA6MTIuMDAwWiIsInBheWxvYWQiOnsiYWdlbnRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTIiLCJyb2xlIjoiYWdlbnQiLCJ0ZXh0IjoiUmVsZWFzZSBub3RlcyBkcmFmdGVkLiJ9LCJwcm90b2NvbF92ZXJzaW9uIjoiMS4wIiwic2VxdWVuY2UiOjEyLCJzaWduZXJfa2V5X2lkIjoiTllNNVJMUkpCNksyQkQ1UkVaMldYNzVIRFZVTFhBVzVCQVlKUjZGM0NMVk9ZRE4zN1FaUSIsInNvdXJjZV9hZ2VudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MiIsInRlbmFudF9pZCI6ImFjbWUiLCJ0aHJlYWRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTAiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "c408ac5cafde638e7b27a0d9b2c31ec2110110850cc4a0c9c551b932ecfb4a4a",
+    "signature": "5utqy7jiMOKT3xEaXjMk_WAPsMJKmc3jmcVEHtZn4rUbDX3vjhaS9BWuualWmjdQkJq1oKrWwZJTB5ey79DeAg",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e11",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "definition_digest": "sha256:abababababababababababababababababababababababababababababababab",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e12",
+      "event_type": "chat.message",
+      "occurred_at": "2026-07-26T12:00:12.000Z",
+      "payload": {
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "role": "agent",
+        "text": "Release notes drafted."
+      },
+      "protocol_version": "1.0",
+      "sequence": 12,
+      "signature": "5utqy7jiMOKT3xEaXjMk_WAPsMJKmc3jmcVEHtZn4rUbDX3vjhaS9BWuualWmjdQkJq1oKrWwZJTB5ey79DeAg",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "chat.message.human",
+    "fixture": "fixtures/valid/chat.message.human.json",
+    "event_type": "chat.message",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTExIiwiZXZlbnRfdHlwZSI6ImNoYXQubWVzc2FnZSIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxMS4wMDBaIiwicGF5bG9hZCI6eyJyb2xlIjoiaHVtYW4iLCJ0ZXh0IjoiU2hpcCB0aGUgcmVsZWFzZSBub3Rlcy4ifSwicHJvdG9jb2xfdmVyc2lvbiI6IjEuMCIsInNlcXVlbmNlIjoxMSwic2lnbmVyX2tleV9pZCI6Ik5ZTTVSTFJKQjZLMkJENVJFWjJXWDc1SERWVUxYQVc1QkFZSlI2RjNDTFZPWUROMzdRWlEiLCJ0ZW5hbnRfaWQiOiJhY21lIiwidGhyZWFkX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkwIiwidHJ1c3RfZG9tYWluIjoidGVuYW50Iiwid29ya3NwYWNlX2lkIjoicGxhdGZvcm0ifQ==",
+    "canonical_sha256": "b273721415b594c4da408ab5d296599eb86ca8a27d01db08ce3b95400eb63fae",
+    "signature": "sJcz2dB3WQPLnsTyTIYUvfblkXk-dHj-mqTyrGAco02epqOtW62fGiZWqVHgmbwDSi4Zcq3R00Q4LFXn0yB2Bw",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e11",
+      "event_type": "chat.message",
+      "occurred_at": "2026-07-26T12:00:11.000Z",
+      "payload": {
+        "role": "human",
+        "text": "Ship the release notes."
+      },
+      "protocol_version": "1.0",
+      "sequence": 11,
+      "signature": "sJcz2dB3WQPLnsTyTIYUvfblkXk-dHj-mqTyrGAco02epqOtW62fGiZWqVHgmbwDSi4Zcq3R00Q4LFXn0yB2Bw",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "chat.message.saas-attested",
+    "fixture": "fixtures/valid/chat.message.saas-attested.json",
+    "event_type": "chat.message",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTEzIiwiZXZlbnRfdHlwZSI6ImNoYXQubWVzc2FnZSIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxMy4wMDBaIiwicGF5bG9hZCI6eyJhY3RvciI6eyJhdXRoZW50aWNhdGVkX2F0IjoiMjAyNi0wNy0yNlQxMTo1OTowMC4wMDBaIiwiZW1haWwiOiJkYW5hQGV4YW1wbGUuY29tIiwidXNlcl9pZCI6InVzZXItNyJ9LCJyb2xlIjoiaHVtYW4iLCJ0ZXh0IjoiQXBwcm92ZWQuIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MTMsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwidGVuYW50X2lkIjoiYWNtZSIsInRocmVhZF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MCIsInRydXN0X2RvbWFpbiI6InNhYXMtYXR0ZXN0ZWQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "745023a57975bb868010c52a29bc51c2a61985c0c1a664f50f6856adfd0cd59b",
+    "signature": "qFiyFEr4MKj8IIam23_bzbu6hjMoRVFlUqQrsNZtoHQD9elrhN07A_6cE-FnXz0fj8nIFX_BzvlMVMfDLVeSAw",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e13",
+      "event_type": "chat.message",
+      "occurred_at": "2026-07-26T12:00:13.000Z",
+      "payload": {
+        "actor": {
+          "authenticated_at": "2026-07-26T11:59:00.000Z",
+          "email": "dana@example.com",
+          "user_id": "user-7"
+        },
+        "role": "human",
+        "text": "Approved."
+      },
+      "protocol_version": "1.0",
+      "sequence": 13,
+      "signature": "qFiyFEr4MKj8IIam23_bzbu6hjMoRVFlUqQrsNZtoHQD9elrhN07A_6cE-FnXz0fj8nIFX_BzvlMVMfDLVeSAw",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "saas-attested",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "command.requested",
+    "fixture": "fixtures/valid/command.requested.json",
+    "event_type": "command.requested",
+    "canonical_base64": "eyJjb3JyZWxhdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UwMSIsImRlbGVnYXRpb25fY2hhaW4iOltdLCJkZXN0aW5hdGlvbl9jb25kdWN0b3JfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTMiLCJldmVudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UyMSIsImV2ZW50X3R5cGUiOiJjb21tYW5kLnJlcXVlc3RlZCIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoyMS4wMDBaIiwicGF5bG9hZCI6eyJhY3RvciI6eyJhdXRoZW50aWNhdGVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoyMC4wMDBaIiwiZW1haWwiOiJkYW5hQGV4YW1wbGUuY29tIiwidXNlcl9pZCI6InVzZXItNyJ9LCJhcmd1bWVudHMiOnsidGhyZWFkX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkwIn0sImNvbW1hbmQiOiJ0aHJlYWQuY2xvc2UiLCJjb21tYW5kX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTgzIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjEsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwidGVuYW50X2lkIjoiYWNtZSIsInRydXN0X2RvbWFpbiI6InNhYXMtYXR0ZXN0ZWQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "48624cd159b9e78e2ea165b8017cd2fa63e6a48f051a2beda93e2931ecadb08f",
+    "signature": "7I4fqxB_rYtNsdi1P-CDmkYl9hGPxnLUaActxxO99G8jRcUmPLsuywVxRwh3eN6btauycF__YublNPgR2ctrAA",
+    "envelope": {
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "destination_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e21",
+      "event_type": "command.requested",
+      "occurred_at": "2026-07-26T12:00:21.000Z",
+      "payload": {
+        "actor": {
+          "authenticated_at": "2026-07-26T12:00:20.000Z",
+          "email": "dana@example.com",
+          "user_id": "user-7"
+        },
+        "arguments": {
+          "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90"
+        },
+        "command": "thread.close",
+        "command_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e83"
+      },
+      "protocol_version": "1.0",
+      "sequence": 21,
+      "signature": "7I4fqxB_rYtNsdi1P-CDmkYl9hGPxnLUaActxxO99G8jRcUmPLsuywVxRwh3eN6btauycF__YublNPgR2ctrAA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "tenant_id": "acme",
+      "trust_domain": "saas-attested",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "command.result",
+    "fixture": "fixtures/valid/command.result.json",
+    "event_type": "command.result",
+    "canonical_base64": "eyJjYXVzYXRpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlMjEiLCJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTIyIiwiZXZlbnRfdHlwZSI6ImNvbW1hbmQucmVzdWx0Iiwib2NjdXJyZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjIyLjAwMFoiLCJwYXlsb2FkIjp7ImNvbW1hbmRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODMiLCJkZXRhaWwiOiJ0aHJlYWQgY2xvc2VkIiwicmVzdWx0Ijp7InRocmVhZF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MCJ9LCJzdGF0dXMiOiJjb21wbGV0ZWQifSwicHJvdG9jb2xfdmVyc2lvbiI6IjEuMCIsInNlcXVlbmNlIjoyMiwic2lnbmVyX2tleV9pZCI6Ik5ZTTVSTFJKQjZLMkJENVJFWjJXWDc1SERWVUxYQVc1QkFZSlI2RjNDTFZPWUROMzdRWlEiLCJzb3VyY2VfY29uZHVjdG9yX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkzIiwidGVuYW50X2lkIjoiYWNtZSIsInRydXN0X2RvbWFpbiI6InRlbmFudCIsIndvcmtzcGFjZV9pZCI6InBsYXRmb3JtIn0=",
+    "canonical_sha256": "a543a2893ec039bbb4edc8b0b6131467aff47cd6eeec9d152b1bdac4f481ccba",
+    "signature": "Ht8ig0jatRvFrjj433mYlMoh8PM2ShfOexffZyvT9WLrvCXNVMhYSp8bep5KD7sMHxbjeNJ_M8cAmxyx4fnCAA",
+    "envelope": {
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e21",
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e22",
+      "event_type": "command.result",
+      "occurred_at": "2026-07-26T12:00:22.000Z",
+      "payload": {
+        "command_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e83",
+        "detail": "thread closed",
+        "result": {
+          "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90"
+        },
+        "status": "completed"
+      },
+      "protocol_version": "1.0",
+      "sequence": 22,
+      "signature": "Ht8ig0jatRvFrjj433mYlMoh8PM2ShfOexffZyvT9WLrvCXNVMhYSp8bep5KD7sMHxbjeNJ_M8cAmxyx4fnCAA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "command.result.failed",
+    "fixture": "fixtures/valid/command.result.failed.json",
+    "event_type": "command.result",
+    "canonical_base64": "eyJjYXVzYXRpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlMjEiLCJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTIzIiwiZXZlbnRfdHlwZSI6ImNvbW1hbmQucmVzdWx0Iiwib2NjdXJyZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjIzLjAwMFoiLCJwYXlsb2FkIjp7ImNvbW1hbmRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODQiLCJlcnJvciI6eyJjb2RlIjoibGVhc2VfbG9zdCIsIm1lc3NhZ2UiOiJleGVjdXRpb24gbGVhc2UgZXhwaXJlZCJ9LCJzdGF0dXMiOiJmYWlsZWQifSwicHJvdG9jb2xfdmVyc2lvbiI6IjEuMCIsInNlcXVlbmNlIjoyMywic2lnbmVyX2tleV9pZCI6Ik5ZTTVSTFJKQjZLMkJENVJFWjJXWDc1SERWVUxYQVc1QkFZSlI2RjNDTFZPWUROMzdRWlEiLCJzb3VyY2VfY29uZHVjdG9yX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkzIiwidGVuYW50X2lkIjoiYWNtZSIsInRydXN0X2RvbWFpbiI6InRlbmFudCIsIndvcmtzcGFjZV9pZCI6InBsYXRmb3JtIn0=",
+    "canonical_sha256": "f953eca36652cd9a3d210058a3d0fee9ecc01773bb48b883915ca6a140ac74c9",
+    "signature": "aZ5UeNynaQz7f34QNBMG-D599nU2AGtdH2OCHs9Zv484VNge5cx2ANYLNa1TX2SwcsSTae4gacKNYqz4jA5OAA",
+    "envelope": {
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e21",
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e23",
+      "event_type": "command.result",
+      "occurred_at": "2026-07-26T12:00:23.000Z",
+      "payload": {
+        "command_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e84",
+        "error": {
+          "code": "lease_lost",
+          "message": "execution lease expired"
+        },
+        "status": "failed"
+      },
+      "protocol_version": "1.0",
+      "sequence": 23,
+      "signature": "aZ5UeNynaQz7f34QNBMG-D599nU2AGtdH2OCHs9Zv484VNge5cx2ANYLNa1TX2SwcsSTae4gacKNYqz4jA5OAA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "decision.record",
+    "fixture": "fixtures/valid/decision.record.json",
+    "event_type": "decision.record",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTE1IiwiZXZlbnRfdHlwZSI6ImRlY2lzaW9uLnJlY29yZCIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxNS4wMDBaIiwicGF5bG9hZCI6eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImFnZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkyIiwiZGVjaXNpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODAiLCJldmlkZW5jZSI6W3sia2luZCI6ImV2ZW50IiwicmVmZXJlbmNlIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTExIn0seyJkaWdlc3QiOiJzaGEyNTY6ZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZmVmZWZlZiIsImtpbmQiOiJhcnRpZmFjdCIsInJlZmVyZW5jZSI6ImFydGlmYWN0Oi8vcGxhbi8xIn1dLCJzdGF0ZW1lbnQiOiJBZG9wdCBKZXRTdHJlYW0gd29yayBxdWV1ZXMgZm9yIGNvbW1hbmRzLiJ9LCJwcm90b2NvbF92ZXJzaW9uIjoiMS4wIiwic2VxdWVuY2UiOjE1LCJzaWduZXJfa2V5X2lkIjoiTllNNVJMUkpCNksyQkQ1UkVaMldYNzVIRFZVTFhBVzVCQVlKUjZGM0NMVk9ZRE4zN1FaUSIsInNvdXJjZV9hZ2VudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MiIsInRlbmFudF9pZCI6ImFjbWUiLCJ0aHJlYWRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTAiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "a8351f9005f9ecb4f89cf9dc06a7785396adf952fed647ff826f66e36ffe1110",
+    "signature": "kbc0wM0bPn-KsxrgyENWrfDRj6txDWIQpWJMijblblvd77Q2D7eCOwH2lDG1ZYyYcjgmW-OUnIqJuRfR-jbyAg",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e15",
+      "event_type": "decision.record",
+      "occurred_at": "2026-07-26T12:00:15.000Z",
+      "payload": {
+        "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "decision_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e80",
+        "evidence": [
+          {
+            "kind": "event",
+            "reference": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e11"
+          },
+          {
+            "digest": "sha256:efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef",
+            "kind": "artifact",
+            "reference": "artifact://plan/1"
+          }
+        ],
+        "statement": "Adopt JetStream work queues for commands."
+      },
+      "protocol_version": "1.0",
+      "sequence": 15,
+      "signature": "kbc0wM0bPn-KsxrgyENWrfDRj6txDWIQpWJMijblblvd77Q2D7eCOwH2lDG1ZYyYcjgmW-OUnIqJuRfR-jbyAg",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "permission.requested",
+    "fixture": "fixtures/valid/permission.requested.json",
+    "event_type": "permission.requested",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTE2IiwiZXZlbnRfdHlwZSI6InBlcm1pc3Npb24ucmVxdWVzdGVkIiwiZXhwaXJlc19hdCI6IjIwMjYtMDctMjdUMTI6MDA6MDAuMDAwWiIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxNi4wMDBaIiwicGF5bG9hZCI6eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImFnZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkyIiwiaW50ZXJhY3Rpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODEiLCJvbl90aW1lb3V0IjoiZGVueSIsInJpc2siOiJoaWdoIiwidG9vbF9pbnB1dCI6eyJjb21tYW5kIjoiZ2l0IHB1c2gifSwidG9vbF9uYW1lIjoiYmFzaCJ9LCJwcm90b2NvbF92ZXJzaW9uIjoiMS4wIiwic2VxdWVuY2UiOjE2LCJzaWduZXJfa2V5X2lkIjoiTllNNVJMUkpCNksyQkQ1UkVaMldYNzVIRFZVTFhBVzVCQVlKUjZGM0NMVk9ZRE4zN1FaUSIsInNvdXJjZV9hZ2VudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MiIsInRlbmFudF9pZCI6ImFjbWUiLCJ0aHJlYWRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTAiLCJ0cnVzdF9kb21haW4iOiJ0ZW5hbnQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "20e7b60cd3f692b4b82501951d5e07fe51a7f3ebe2d02418de25b8bc2ab7126e",
+    "signature": "Fh6MPJUae5oErwaHqX3Nboo3bibA_ObLe26lda8WMaatwVjEwDzGeCj542oJzSFsJrEJ6vmsmjExDy78H1FgCw",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e16",
+      "event_type": "permission.requested",
+      "expires_at": "2026-07-27T12:00:00.000Z",
+      "occurred_at": "2026-07-26T12:00:16.000Z",
+      "payload": {
+        "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e81",
+        "on_timeout": "deny",
+        "risk": "high",
+        "tool_input": {
+          "command": "git push"
+        },
+        "tool_name": "bash"
+      },
+      "protocol_version": "1.0",
+      "sequence": 16,
+      "signature": "Fh6MPJUae5oErwaHqX3Nboo3bibA_ObLe26lda8WMaatwVjEwDzGeCj542oJzSFsJrEJ6vmsmjExDy78H1FgCw",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "permission.resolved.allowed",
+    "fixture": "fixtures/valid/permission.resolved.allowed.json",
+    "event_type": "permission.resolved",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNhdXNhdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UxNiIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTE3IiwiZXZlbnRfdHlwZSI6InBlcm1pc3Npb24ucmVzb2x2ZWQiLCJvY2N1cnJlZF9hdCI6IjIwMjYtMDctMjZUMTI6MDA6MTcuMDAwWiIsInBheWxvYWQiOnsiYWN0b3IiOnsiYXV0aGVudGljYXRlZF9hdCI6IjIwMjYtMDctMjZUMTI6MDA6MTAuMDAwWiIsImVtYWlsIjoiZGFuYUBleGFtcGxlLmNvbSIsInVzZXJfaWQiOiJ1c2VyLTcifSwiaW50ZXJhY3Rpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODEiLCJyZXNvbHV0aW9uIjoiYWxsb3dlZCJ9LCJwcm90b2NvbF92ZXJzaW9uIjoiMS4wIiwic2VxdWVuY2UiOjE3LCJzaWduZXJfa2V5X2lkIjoiTllNNVJMUkpCNksyQkQ1UkVaMldYNzVIRFZVTFhBVzVCQVlKUjZGM0NMVk9ZRE4zN1FaUSIsInRlbmFudF9pZCI6ImFjbWUiLCJ0aHJlYWRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTAiLCJ0cnVzdF9kb21haW4iOiJzYWFzLWF0dGVzdGVkIiwid29ya3NwYWNlX2lkIjoicGxhdGZvcm0ifQ==",
+    "canonical_sha256": "4ba691c2565dd4c0195522604ec5c06ecffa8823e27ac1a896c888caea74c927",
+    "signature": "qP2pAo9cS4YkxXXfFaA6UITh2f6e6_YRRqgbYCz_Z1fcTbjNwLWkzI3oYv4BVGXpFkMRW1-eINZyQgONZfzfCg",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e16",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e17",
+      "event_type": "permission.resolved",
+      "occurred_at": "2026-07-26T12:00:17.000Z",
+      "payload": {
+        "actor": {
+          "authenticated_at": "2026-07-26T12:00:10.000Z",
+          "email": "dana@example.com",
+          "user_id": "user-7"
+        },
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e81",
+        "resolution": "allowed"
+      },
+      "protocol_version": "1.0",
+      "sequence": 17,
+      "signature": "qP2pAo9cS4YkxXXfFaA6UITh2f6e6_YRRqgbYCz_Z1fcTbjNwLWkzI3oYv4BVGXpFkMRW1-eINZyQgONZfzfCg",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "saas-attested",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "permission.resolved.expired",
+    "fixture": "fixtures/valid/permission.resolved.expired.json",
+    "event_type": "permission.resolved",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNhdXNhdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UxNiIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTE4IiwiZXZlbnRfdHlwZSI6InBlcm1pc3Npb24ucmVzb2x2ZWQiLCJvY2N1cnJlZF9hdCI6IjIwMjYtMDctMjZUMTI6MDA6MTguMDAwWiIsInBheWxvYWQiOnsiaW50ZXJhY3Rpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODEiLCJyZWFzb24iOiJubyByZXNwb25zZSBiZWZvcmUgZXhwaXJlc19hdCIsInJlc29sdXRpb24iOiJleHBpcmVkIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MTgsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwidGVuYW50X2lkIjoiYWNtZSIsInRocmVhZF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MCIsInRydXN0X2RvbWFpbiI6InRlbmFudCIsIndvcmtzcGFjZV9pZCI6InBsYXRmb3JtIn0=",
+    "canonical_sha256": "4c8a21ca83fd6180848ff0f4235b28bbb9afbc05761d81d2c848929c5ce40035",
+    "signature": "dDiWe1y_qn4FGtqaynnOELiSGuTpNWABL1LaY9CCj3AwkgCiyJvaHRPygNMw8psvKhjC8K5nmFp90-w-HybWDQ",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e16",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e18",
+      "event_type": "permission.resolved",
+      "occurred_at": "2026-07-26T12:00:18.000Z",
+      "payload": {
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e81",
+        "reason": "no response before expires_at",
+        "resolution": "expired"
+      },
+      "protocol_version": "1.0",
+      "sequence": 18,
+      "signature": "dDiWe1y_qn4FGtqaynnOELiSGuTpNWABL1LaY9CCj3AwkgCiyJvaHRPygNMw8psvKhjC8K5nmFp90-w-HybWDQ",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "question.requested",
+    "fixture": "fixtures/valid/question.requested.json",
+    "event_type": "question.requested",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTE5IiwiZXZlbnRfdHlwZSI6InF1ZXN0aW9uLnJlcXVlc3RlZCIsImV4cGlyZXNfYXQiOiIyMDI2LTA3LTI3VDEyOjAwOjAwLjAwMFoiLCJvY2N1cnJlZF9hdCI6IjIwMjYtMDctMjZUMTI6MDA6MTkuMDAwWiIsInBheWxvYWQiOnsiYWdlbnRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTIiLCJpbnRlcmFjdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U4MiIsIm9uX3RpbWVvdXQiOiJhYm9ydF9hY3Rpdml0eSIsIm9wdGlvbnMiOlsiZXUtd2VzdC0xIiwidXMtZWFzdC0xIl0sInF1ZXN0aW9uIjoiV2hpY2ggcmVnaW9uIHNob3VsZCB0aGUgbWlncmF0aW9uIHRhcmdldD8ifSwicHJvdG9jb2xfdmVyc2lvbiI6IjEuMCIsInNlcXVlbmNlIjoxOSwic2lnbmVyX2tleV9pZCI6Ik5ZTTVSTFJKQjZLMkJENVJFWjJXWDc1SERWVUxYQVc1QkFZSlI2RjNDTFZPWUROMzdRWlEiLCJzb3VyY2VfYWdlbnRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTIiLCJ0ZW5hbnRfaWQiOiJhY21lIiwidGhyZWFkX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkwIiwidHJ1c3RfZG9tYWluIjoidGVuYW50Iiwid29ya3NwYWNlX2lkIjoicGxhdGZvcm0ifQ==",
+    "canonical_sha256": "406cd80c7fddf514b4e6903b537d5b8269e1e56b4d3a8f9233bde1ef5857d1a9",
+    "signature": "8JEo2aiUG50e2-XWaefC3IH_3LB89mREI_J7j42PVDdrcAnDpbJJVSTH08f74a0hJEh1TL-3wQ4fAXFM2wrEBw",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e19",
+      "event_type": "question.requested",
+      "expires_at": "2026-07-27T12:00:00.000Z",
+      "occurred_at": "2026-07-26T12:00:19.000Z",
+      "payload": {
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e82",
+        "on_timeout": "abort_activity",
+        "options": [
+          "eu-west-1",
+          "us-east-1"
+        ],
+        "question": "Which region should the migration target?"
+      },
+      "protocol_version": "1.0",
+      "sequence": 19,
+      "signature": "8JEo2aiUG50e2-XWaefC3IH_3LB89mREI_J7j42PVDdrcAnDpbJJVSTH08f74a0hJEh1TL-3wQ4fAXFM2wrEBw",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "question.resolved",
+    "fixture": "fixtures/valid/question.resolved.json",
+    "event_type": "question.resolved",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNhdXNhdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UxOSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTIwIiwiZXZlbnRfdHlwZSI6InF1ZXN0aW9uLnJlc29sdmVkIiwib2NjdXJyZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjIwLjAwMFoiLCJwYXlsb2FkIjp7ImFjdG9yIjp7ImF1dGhlbnRpY2F0ZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjE1LjAwMFoiLCJlbWFpbCI6ImRhbmFAZXhhbXBsZS5jb20iLCJ1c2VyX2lkIjoidXNlci03In0sImFuc3dlciI6ImV1LXdlc3QtMSIsImludGVyYWN0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTgyIiwicmVzb2x1dGlvbiI6ImFuc3dlcmVkIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjAiLCJzZXF1ZW5jZSI6MjAsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwidGVuYW50X2lkIjoiYWNtZSIsInRocmVhZF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MCIsInRydXN0X2RvbWFpbiI6InNhYXMtYXR0ZXN0ZWQiLCJ3b3Jrc3BhY2VfaWQiOiJwbGF0Zm9ybSJ9",
+    "canonical_sha256": "ea8f06545eae7178b1d0cb01497b4fff6de8358d92e658b0801ecc912cd7f43b",
+    "signature": "z6b2L4jFa-FaW4FPTsxDbY69j_reWmTkWjFktL2TFF12NyJGEINXbvelSGXl7JCUGJb0OvUHE4UW0l3N2jbSAA",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e19",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e20",
+      "event_type": "question.resolved",
+      "occurred_at": "2026-07-26T12:00:20.000Z",
+      "payload": {
+        "actor": {
+          "authenticated_at": "2026-07-26T12:00:15.000Z",
+          "email": "dana@example.com",
+          "user_id": "user-7"
+        },
+        "answer": "eu-west-1",
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e82",
+        "resolution": "answered"
+      },
+      "protocol_version": "1.0",
+      "sequence": 20,
+      "signature": "z6b2L4jFa-FaW4FPTsxDbY69j_reWmTkWjFktL2TFF12NyJGEINXbvelSGXl7JCUGJb0OvUHE4UW0l3N2jbSAA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "saas-attested",
+      "workspace_id": "platform"
+    }
+  }
+]

@@ -22,19 +22,26 @@ func TestGeneratedFilesAreCurrent(t *testing.T) {
 		require.NoError(t, step.fn(scratch, reg), step.name)
 	}
 
-	committed := filepath.Join(root, goPackageDir)
-	generated := filepath.Join(scratch, goPackageDir)
+	for _, dir := range generatedDirs() {
+		committed := filepath.Join(root, dir)
+		generated := filepath.Join(scratch, dir)
 
-	files := generatedFiles(t, generated)
-	require.NotEmpty(t, files)
+		files := generatedFiles(t, generated)
+		require.NotEmpty(t, files, dir)
 
-	for _, rel := range files {
-		want, err := os.ReadFile(filepath.Join(generated, rel))
-		require.NoError(t, err)
-		got, err := os.ReadFile(filepath.Join(committed, rel))
-		require.NoError(t, err, "%s is missing; run make generate", rel)
-		require.Equal(t, string(want), string(got), "%s is stale; run make generate", rel)
+		for _, rel := range files {
+			want, err := os.ReadFile(filepath.Join(generated, rel))
+			require.NoError(t, err)
+			got, err := os.ReadFile(filepath.Join(committed, rel))
+			require.NoError(t, err, "%s is missing; run make generate", rel)
+			require.Equal(t, string(want), string(got), "%s/%s is stale; run make generate", dir, rel)
+		}
 	}
+}
+
+// generatedDirs are the trees whose entire contents the generator owns.
+func generatedDirs() []string {
+	return []string{goPackageDir, filepath.FromSlash(signingDir)}
 }
 
 // scratchRoot is an empty repository root that carries only the generator's
@@ -42,24 +49,26 @@ func TestGeneratedFilesAreCurrent(t *testing.T) {
 func scratchRoot(t *testing.T, root string) string {
 	t.Helper()
 	dir := t.TempDir()
-	require.NoError(t, filepath.WalkDir(filepath.Join(root, schemaDir), func(p string, d fs.DirEntry, err error) error {
-		if err != nil || d.IsDir() {
-			return err
-		}
-		rel, err := filepath.Rel(root, p)
-		if err != nil {
-			return err
-		}
-		body, err := os.ReadFile(p)
-		if err != nil {
-			return err
-		}
-		dst := filepath.Join(dir, rel)
-		if err := os.MkdirAll(filepath.Dir(dst), 0o750); err != nil {
-			return err
-		}
-		return os.WriteFile(dst, body, 0o600)
-	}))
+	for _, input := range []string{schemaDir, validFixtureDir, badFixtureDir} {
+		require.NoError(t, filepath.WalkDir(filepath.Join(root, filepath.FromSlash(input)), func(p string, d fs.DirEntry, err error) error {
+			if err != nil || d.IsDir() {
+				return err
+			}
+			rel, err := filepath.Rel(root, p)
+			if err != nil {
+				return err
+			}
+			body, err := os.ReadFile(p)
+			if err != nil {
+				return err
+			}
+			dst := filepath.Join(dir, rel)
+			if err := os.MkdirAll(filepath.Dir(dst), 0o750); err != nil {
+				return err
+			}
+			return os.WriteFile(dst, body, 0o600)
+		}))
+	}
 	return dir
 }
 
@@ -95,12 +104,14 @@ func TestGenerationIsDeterministic(t *testing.T) {
 		}
 	}
 
-	for _, rel := range generatedFiles(t, filepath.Join(first, goPackageDir)) {
-		a, err := os.ReadFile(filepath.Join(first, goPackageDir, rel))
-		require.NoError(t, err)
-		b, err := os.ReadFile(filepath.Join(second, goPackageDir, rel))
-		require.NoError(t, err)
-		require.Equal(t, string(a), string(b), rel)
+	for _, dir := range generatedDirs() {
+		for _, rel := range generatedFiles(t, filepath.Join(first, dir)) {
+			a, err := os.ReadFile(filepath.Join(first, dir, rel))
+			require.NoError(t, err)
+			b, err := os.ReadFile(filepath.Join(second, dir, rel))
+			require.NoError(t, err)
+			require.Equal(t, string(a), string(b), rel)
+		}
 	}
 }
 

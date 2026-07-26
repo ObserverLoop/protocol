@@ -68,6 +68,24 @@ make lint       # pinned golangci-lint
 make check      # build, vet, lint, test -race, and the generation drift gate
 ```
 
+## Conformance fixtures
+
+`fixtures/manifest.json` indexes every event type, its schema, and the fixtures
+that cover it; the generator fails if a registry entry has no fixture.
+
+`fixtures/signing/` carries cross-language Ed25519 vectors. Each vector gives
+the envelope, the RFC 8785 canonical form with `signature` omitted (base64 and
+SHA-256), and the signature over exactly those bytes. The key is derived from a
+fixed input and Ed25519 signing is deterministic, so the vectors regenerate
+byte-identically. The key is a conformance key; it signs nothing outside this
+repository.
+
+To verify a vector in another language: base64-decode `canonical_base64`, check
+its SHA-256 against `canonical_sha256`, and verify `signature` over those bytes
+with `public_key_base64url` from `fixtures/signing/key.json`. Independently,
+canonicalise the vector's `envelope` with `signature` removed and confirm you
+reproduce the same bytes.
+
 ## Licence
 
 Apache License 2.0. See `LICENSE` and `NOTICE`.

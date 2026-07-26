@@ -1,0 +1,7 @@
+{
+  "algorithm": "ed25519",
+  "seed_base64url": "qIaFZjt4AqSOyqyjYaslag96NR7yxND97pyUAGLUnTE",
+  "public_key_base64url": "LN1LnXrjCDbiCa9uqMs7le7FzEC2-CdKVluF-JjQEZ0",
+  "key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+  "note": "Conformance key only. Derived from the SHA-256 of observerloop.protocol.fixtures.v1, so every vector is reproducible. It signs nothing outside this repository."
+}
