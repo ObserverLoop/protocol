@@ -60,5 +60,6 @@ func generators() []generator {
 		{"authz", genAuthz},
 		{"subjects", genSubjects},
 		{"streams", genStreams},
+		{"schemas", genSchemas},
 	}
 }

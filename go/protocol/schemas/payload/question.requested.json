@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/question.requested.json",
+  "title": "question.requested",
+  "description": "An agent asks a human a question. Same lifecycle machine as permission.requested; only the payload differs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interaction_id", "agent_id", "question", "on_timeout"],
+  "properties": {
+    "interaction_id": { "$ref": "../common.json#/$defs/identifier" },
+    "agent_id": { "$ref": "../common.json#/$defs/identifier" },
+    "activity_id": { "$ref": "../common.json#/$defs/identifier" },
+    "lease_id": { "$ref": "../common.json#/$defs/identifier" },
+    "question": { "type": "string", "minLength": 1, "maxLength": 32768 },
+    "options": {
+      "description": "When present, the answer is expected to be one of these.",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 16,
+      "items": { "type": "string", "minLength": 1, "maxLength": 1024 }
+    },
+    "on_timeout": { "$ref": "../common.json#/$defs/on_timeout" }
+  }
+}

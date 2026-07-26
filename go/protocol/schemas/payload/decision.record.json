@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/decision.record.json",
+  "title": "decision.record",
+  "description": "A structured Observer record: what was decided and what it was decided on. It records the conclusion and its citations, never the deliberation that produced them.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision_id", "statement"],
+  "properties": {
+    "decision_id": { "$ref": "../common.json#/$defs/identifier" },
+    "statement": { "type": "string", "minLength": 1, "maxLength": 8192 },
+    "agent_id": { "$ref": "../common.json#/$defs/identifier" },
+    "activity_id": { "$ref": "../common.json#/$defs/identifier" },
+    "evidence": {
+      "description": "Citations the decision rests on. A decision that gates a state change may cite only durable references.",
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "reference"],
+        "properties": {
+          "kind": { "enum": ["event", "artifact", "external"] },
+          "reference": { "type": "string", "minLength": 1, "maxLength": 2048 },
+          "digest": { "$ref": "../common.json#/$defs/digest" }
+        }
+      }
+    }
+  }
+}

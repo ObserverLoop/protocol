@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/envelope.json",
+  "title": "Signed envelope",
+  "description": "The signed unit of the protocol. additionalProperties is deliberately open: an unknown MINOR version may add optional fields, and a forwarder must preserve them so that forwarding never requires re-signing. Strictness lives in the payload schemas, which are closed.",
+  "type": "object",
+  "required": [
+    "protocol_version",
+    "event_id",
+    "event_type",
+    "trust_domain",
+    "tenant_id",
+    "workspace_id",
+    "occurred_at",
+    "sequence",
+    "correlation_id",
+    "payload",
+    "signer_key_id",
+    "delegation_chain",
+    "signature"
+  ],
+  "dependentRequired": {
+    "source_conductor_id": ["conductor_epoch"]
+  },
+  "properties": {
+    "protocol_version": {
+      "description": "MAJOR.MINOR. An unknown MAJOR is rejected; an unknown MINOR is accepted.",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "event_id": {
+      "description": "UUIDv7 in canonical lowercase text form.",
+      "$ref": "common.json#/$defs/identifier"
+    },
+    "event_type": {
+      "description": "A registry type token. The permitted set is generated from registry.yaml and is deliberately not restated here: the registry is the only enumeration.",
+      "type": "string",
+      "minLength": 1
+    },
+    "trust_domain": { "enum": ["tenant", "saas-attested"] },
+    "tenant_id": { "$ref": "common.json#/$defs/identifier" },
+    "workspace_id": { "$ref": "common.json#/$defs/identifier" },
+    "thread_id": { "$ref": "common.json#/$defs/identifier" },
+    "activity_id": { "$ref": "common.json#/$defs/identifier" },
+    "source_conductor_id": { "$ref": "common.json#/$defs/identifier" },
+    "conductor_epoch": {
+      "description": "Fencing token. Present whenever source_conductor_id is.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_agent_id": { "$ref": "common.json#/$defs/identifier" },
+    "destination_conductor_id": { "$ref": "common.json#/$defs/identifier" },
+    "destination_agent_id": { "$ref": "common.json#/$defs/identifier" },
+    "definition_digest": { "$ref": "common.json#/$defs/digest" },
+    "occurred_at": { "$ref": "common.json#/$defs/timestamp" },
+    "sequence": {
+      "description": "Monotonic per signer. A gap is reported, never blocked on.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "correlation_id": { "$ref": "common.json#/$defs/identifier" },
+    "causation_id": { "$ref": "common.json#/$defs/identifier" },
+    "expires_at": { "$ref": "common.json#/$defs/timestamp" },
+    "payload": {
+      "description": "Validated against the registry schema for event_type.",
+      "type": "object"
+    },
+    "signer_key_id": { "$ref": "common.json#/$defs/key_id" },
+    "delegation_chain": {
+      "description": "delegation_id values, signer first, root-exclusive. Empty when the signer is a root. Maximum depth below a root is two.",
+      "type": "array",
+      "maxItems": 2,
+      "items": { "$ref": "common.json#/$defs/identifier" }
+    },
+    "signature": {
+      "description": "Ed25519 over the RFC 8785 canonical form of this object with signature omitted.",
+      "$ref": "common.json#/$defs/signature"
+    }
+  }
+}

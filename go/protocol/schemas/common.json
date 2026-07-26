@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/common.json",
+  "title": "Shared payload definitions",
+  "description": "Definitions referenced by the envelope and by payload schemas. This document defines nothing on its own; it exists so that no shape is written twice.",
+  "$defs": {
+    "identifier": {
+      "description": "A NATS-subject-safe token. The normative grammar is ^[a-z0-9-]{1,63}$ and it lives in exactly one place: protocol.ParseIdentifier. This schema carries the length bound only, deliberately, so that the character class is never restated and can never drift. A consumer that validates with JSON Schema alone must still call the identifier parser.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 63
+    },
+    "timestamp": {
+      "description": "RFC 3339 UTC with exactly millisecond precision. Fixed precision is required because the timestamp is part of the canonical form that is signed.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "key_id": {
+      "description": "base32-nopad SHA-256 of an Ed25519 public key.",
+      "type": "string",
+      "pattern": "^[A-Z2-7]{52}$"
+    },
+    "signature": {
+      "description": "base64url-nopad Ed25519 signature, 64 bytes.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{86}$"
+    },
+    "digest": {
+      "description": "Content digest in algorithm:hex form.",
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "actor": {
+      "description": "The authenticated human a saas-attested envelope acts for. The signature is the service's; this records the person.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_id", "email", "authenticated_at"],
+      "properties": {
+        "user_id": { "$ref": "#/$defs/identifier" },
+        "email": { "type": "string", "minLength": 3, "maxLength": 320 },
+        "authenticated_at": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "on_timeout": {
+      "description": "What Conductor does when an interaction expires unresolved.",
+      "enum": ["deny", "abort_activity"]
+    }
+  }
+}

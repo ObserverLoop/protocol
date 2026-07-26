@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/permission.requested.json",
+  "title": "permission.requested",
+  "description": "An agent asks a human to authorise a tool invocation. The envelope's expires_at bounds it; on expiry Conductor emits permission.resolved with resolution: expired and applies on_timeout.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interaction_id", "agent_id", "tool_name", "on_timeout"],
+  "properties": {
+    "interaction_id": { "$ref": "../common.json#/$defs/identifier" },
+    "agent_id": { "$ref": "../common.json#/$defs/identifier" },
+    "activity_id": { "$ref": "../common.json#/$defs/identifier" },
+    "lease_id": { "$ref": "../common.json#/$defs/identifier" },
+    "tool_name": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "tool_input": { "type": "object" },
+    "risk": { "enum": ["low", "medium", "high"] },
+    "on_timeout": { "$ref": "../common.json#/$defs/on_timeout" }
+  }
+}

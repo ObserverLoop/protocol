@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/audit.schema.json",
+  "title": "audit.schema",
+  "description": "A message was rejected on protocol grounds: an unknown MAJOR, an unknown event type, or a payload that failed its schema. The message is acked - it will never become valid - and this record is why.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reason"],
+  "properties": {
+    "reason": {
+      "enum": [
+        "unsupported_major",
+        "unknown_event_type",
+        "schema_violation",
+        "malformed_envelope"
+      ]
+    },
+    "subject": { "type": "string", "maxLength": 255 },
+    "offending_event_id": { "$ref": "../common.json#/$defs/identifier" },
+    "offending_event_type": { "type": "string", "maxLength": 128 },
+    "observed_protocol_version": { "type": "string", "maxLength": 32 },
+    "detail": { "type": "string", "maxLength": 8192 }
+  }
+}

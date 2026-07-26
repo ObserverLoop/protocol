@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/command.requested.json",
+  "title": "command.requested",
+  "description": "An instruction addressed to one Conductor. command_id is the idempotency key: a Conductor that has already resolved it replays the stored result.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["command_id", "command"],
+  "properties": {
+    "command_id": { "$ref": "../common.json#/$defs/identifier" },
+    "command": {
+      "description": "The command name, dotted. The command set belongs to Conductor, not to the protocol, so it is not enumerated here.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "arguments": { "type": "object" },
+    "actor": { "$ref": "../common.json#/$defs/actor" }
+  }
+}

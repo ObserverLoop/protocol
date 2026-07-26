@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/audit.incident.json",
+  "title": "audit.incident",
+  "description": "An operational fault worth a durable record: a poisoned message, a sequence gap, a missing Observer record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["incident_id", "reason"],
+  "properties": {
+    "incident_id": { "$ref": "../common.json#/$defs/identifier" },
+    "reason": {
+      "enum": [
+        "max_deliveries",
+        "sequence_gap",
+        "missing_record",
+        "plan_policy",
+        "process_failure",
+        "lease_lost"
+      ]
+    },
+    "severity": { "enum": ["info", "warning", "error"] },
+    "subject": { "type": "string", "maxLength": 255 },
+    "offending_event_id": { "$ref": "../common.json#/$defs/identifier" },
+    "detail": { "type": "object" }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/audit.security.json",
+  "title": "audit.security",
+  "description": "A security-relevant observation: clock skew, a redaction, a stale price table, a key registration or revocation. Emitted once per condition, not once per occurrence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reason"],
+  "properties": {
+    "reason": {
+      "enum": [
+        "clock_skew",
+        "redaction",
+        "price_table_stale",
+        "key_registered",
+        "key_revoked",
+        "enrollment"
+      ]
+    },
+    "occurrences": {
+      "description": "How many occurrences this one record stands for.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "subject_key_id": { "$ref": "../common.json#/$defs/key_id" },
+    "detail": { "type": "object" }
+  }
+}

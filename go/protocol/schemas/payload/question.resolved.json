@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/question.resolved.json",
+  "title": "question.resolved",
+  "description": "The terminal state of a question interaction. resolution: expired is emitted by Conductor, not by a human.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["interaction_id", "resolution"],
+  "properties": {
+    "interaction_id": { "$ref": "../common.json#/$defs/identifier" },
+    "resolution": { "enum": ["answered", "expired"] },
+    "answer": { "type": "string", "maxLength": 32768 },
+    "actor": { "$ref": "../common.json#/$defs/actor" }
+  }
+}

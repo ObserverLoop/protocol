@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/chat.message.json",
+  "title": "chat.message",
+  "description": "A turn in a thread. Carries the message a participant emitted, never the reasoning that produced it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["role", "text"],
+  "properties": {
+    "role": { "enum": ["human", "agent", "system"] },
+    "text": { "type": "string", "maxLength": 1048576 },
+    "agent_id": { "$ref": "../common.json#/$defs/identifier" },
+    "actor": { "$ref": "../common.json#/$defs/actor" }
+  }
+}

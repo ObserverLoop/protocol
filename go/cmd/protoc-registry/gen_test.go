@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/fs"
 	"os"
 	"path/filepath"
 	"testing"
@@ -16,7 +17,7 @@ func TestGeneratedFilesAreCurrent(t *testing.T) {
 	reg, err := loadRegistry(root)
 	require.NoError(t, err)
 
-	scratch := t.TempDir()
+	scratch := scratchRoot(t, root)
 	for _, step := range generators() {
 		require.NoError(t, step.fn(scratch, reg), step.name)
 	}
@@ -24,17 +25,60 @@ func TestGeneratedFilesAreCurrent(t *testing.T) {
 	committed := filepath.Join(root, goPackageDir)
 	generated := filepath.Join(scratch, goPackageDir)
 
-	entries, err := os.ReadDir(generated)
-	require.NoError(t, err)
-	require.NotEmpty(t, entries)
+	files := generatedFiles(t, generated)
+	require.NotEmpty(t, files)
 
-	for _, entry := range entries {
-		want, err := os.ReadFile(filepath.Join(generated, entry.Name()))
+	for _, rel := range files {
+		want, err := os.ReadFile(filepath.Join(generated, rel))
 		require.NoError(t, err)
-		got, err := os.ReadFile(filepath.Join(committed, entry.Name()))
-		require.NoError(t, err, "%s is missing; run make generate", entry.Name())
-		require.Equal(t, string(want), string(got), "%s is stale; run make generate", entry.Name())
+		got, err := os.ReadFile(filepath.Join(committed, rel))
+		require.NoError(t, err, "%s is missing; run make generate", rel)
+		require.Equal(t, string(want), string(got), "%s is stale; run make generate", rel)
 	}
+}
+
+// scratchRoot is an empty repository root that carries only the generator's
+// hand-written inputs, so that generation into it starts from nothing.
+func scratchRoot(t *testing.T, root string) string {
+	t.Helper()
+	dir := t.TempDir()
+	require.NoError(t, filepath.WalkDir(filepath.Join(root, schemaDir), func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return err
+		}
+		rel, err := filepath.Rel(root, p)
+		if err != nil {
+			return err
+		}
+		body, err := os.ReadFile(p)
+		if err != nil {
+			return err
+		}
+		dst := filepath.Join(dir, rel)
+		if err := os.MkdirAll(filepath.Dir(dst), 0o750); err != nil {
+			return err
+		}
+		return os.WriteFile(dst, body, 0o600)
+	}))
+	return dir
+}
+
+// generatedFiles lists every file under dir, relative to it.
+func generatedFiles(t *testing.T, dir string) []string {
+	t.Helper()
+	var out []string
+	require.NoError(t, filepath.WalkDir(dir, func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return err
+		}
+		rel, err := filepath.Rel(dir, p)
+		if err != nil {
+			return err
+		}
+		out = append(out, rel)
+		return nil
+	}))
+	return out
 }
 
 // TestGenerationIsDeterministic proves that regeneration is byte-stable, which
@@ -44,21 +88,19 @@ func TestGenerationIsDeterministic(t *testing.T) {
 	reg, err := loadRegistry(root)
 	require.NoError(t, err)
 
-	first, second := t.TempDir(), t.TempDir()
+	first, second := scratchRoot(t, root), scratchRoot(t, root)
 	for _, dir := range []string{first, second} {
 		for _, step := range generators() {
 			require.NoError(t, step.fn(dir, reg), step.name)
 		}
 	}
 
-	entries, err := os.ReadDir(filepath.Join(first, goPackageDir))
-	require.NoError(t, err)
-	for _, entry := range entries {
-		a, err := os.ReadFile(filepath.Join(first, goPackageDir, entry.Name()))
+	for _, rel := range generatedFiles(t, filepath.Join(first, goPackageDir)) {
+		a, err := os.ReadFile(filepath.Join(first, goPackageDir, rel))
 		require.NoError(t, err)
-		b, err := os.ReadFile(filepath.Join(second, goPackageDir, entry.Name()))
+		b, err := os.ReadFile(filepath.Join(second, goPackageDir, rel))
 		require.NoError(t, err)
-		require.Equal(t, string(a), string(b), entry.Name())
+		require.Equal(t, string(a), string(b), rel)
 	}
 }
 

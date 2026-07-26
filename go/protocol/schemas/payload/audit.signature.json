@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/audit.signature.json",
+  "title": "audit.signature",
+  "description": "A message was rejected on signature grounds. Distinct from audit.schema because the operational response differs: a schema failure is a producer bug, a signature failure is a trust event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reason"],
+  "properties": {
+    "reason": {
+      "enum": [
+        "invalid_signature",
+        "unresolvable_delegation",
+        "delegation_expired",
+        "key_compromised",
+        "chain_too_deep",
+        "trust_domain_not_permitted",
+        "capability_missing"
+      ]
+    },
+    "subject": { "type": "string", "maxLength": 255 },
+    "offending_event_id": { "$ref": "../common.json#/$defs/identifier" },
+    "signer_key_id": { "$ref": "../common.json#/$defs/key_id" },
+    "detail": { "type": "string", "maxLength": 8192 }
+  }
+}
