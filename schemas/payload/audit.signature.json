@@ -5,7 +5,9 @@
   "description": "A message was rejected on signature grounds. Distinct from audit.schema because the operational response differs: a schema failure is a producer bug, a signature failure is a trust event.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["reason"],
+  "required": [
+    "reason"
+  ],
   "properties": {
     "reason": {
       "enum": [
@@ -15,12 +17,24 @@
         "key_compromised",
         "chain_too_deep",
         "trust_domain_not_permitted",
-        "capability_missing"
+        "capability_missing",
+        "clock_skew",
+        "envelope_expired"
       ]
     },
-    "subject": { "type": "string", "maxLength": 255 },
-    "offending_event_id": { "$ref": "../common.json#/$defs/identifier" },
-    "signer_key_id": { "$ref": "../common.json#/$defs/key_id" },
-    "detail": { "type": "string", "maxLength": 8192 }
+    "subject": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "offending_event_id": {
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "signer_key_id": {
+      "$ref": "../common.json#/$defs/key_id"
+    },
+    "detail": {
+      "type": "string",
+      "maxLength": 8192
+    }
   }
 }

@@ -5,7 +5,9 @@
   "description": "A security-relevant observation: clock skew, a redaction, a stale price table, a key registration or revocation. Emitted once per condition, not once per occurrence.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["reason"],
+  "required": [
+    "reason"
+  ],
   "properties": {
     "reason": {
       "enum": [
@@ -14,7 +16,8 @@
         "price_table_stale",
         "key_registered",
         "key_revoked",
-        "enrollment"
+        "enrollment",
+        "subject_authorisation"
       ]
     },
     "occurrences": {
@@ -22,7 +25,11 @@
       "type": "integer",
       "minimum": 1
     },
-    "subject_key_id": { "$ref": "../common.json#/$defs/key_id" },
-    "detail": { "type": "object" }
+    "subject_key_id": {
+      "$ref": "../common.json#/$defs/key_id"
+    },
+    "detail": {
+      "type": "object"
+    }
   }
 }
