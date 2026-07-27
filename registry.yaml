@@ -11,7 +11,13 @@
 # 1.1 added tool.call and tool.result. Adding an event type is additive: an
 # unknown MINOR is accepted, and an unknown event type is retained but acted on
 # by nobody, so a 1.0 consumer is unaffected.
-version: "1.1"
+#
+# 1.2 made permission.resolved's actor one of two shapes, adding a signing-key
+# variant beside the attested human. Also additive: the attested shape is
+# unchanged and still validates, and the new shape is one a 1.1 consumer would
+# have rejected as an actor it could not read rather than misread as one it
+# could.
+version: "1.2"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and

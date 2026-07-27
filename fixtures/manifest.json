@@ -1,5 +1,5 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -171,7 +171,8 @@
       ],
       "fixtures": [
         "fixtures/valid/permission.resolved.allowed.json",
-        "fixtures/valid/permission.resolved.expired.json"
+        "fixtures/valid/permission.resolved.expired.json",
+        "fixtures/valid/permission.resolved.key-actor.json"
       ]
     },
     {
@@ -296,6 +297,14 @@
     {
       "fixture": "fixtures/invalid/payload-wrong-enum.json",
       "reason": "role is constrained to human, agent, or system"
+    },
+    {
+      "fixture": "fixtures/invalid/permission-actor-mixes-variants.json",
+      "reason": "permission.resolved actor is one of two shapes, so an object carrying both the attested human and the signing key matches neither: both are closed, and a record that claims two identities for one approver names none of them"
+    },
+    {
+      "fixture": "fixtures/invalid/permission-actor-without-discriminator.json",
+      "reason": "an actor carrying a key_id but no kind satisfies neither shape: the signing key variant requires its discriminator, and a consumer is never asked to infer the variant from which fields are present"
     },
     {
       "fixture": "fixtures/invalid/short-signature.json",

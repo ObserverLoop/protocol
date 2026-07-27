@@ -41,6 +41,22 @@
         "authenticated_at": { "$ref": "#/$defs/timestamp" }
       }
     },
+    "key_actor": {
+      "description": "The approver identified by the signing key whose signature was verified. It is the counterpart of actor for a deployment with no user directory: there is no login to attest, no user_id, and no email, but there is the key that signed the instruction, and that key is the thing that was actually checked. A publisher fills this in from the key its verifier resolved, never from configuration and never from a value a caller supplied.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "key_id"],
+      "properties": {
+        "kind": {
+          "description": "The discriminator, and the only value it takes. It is carried so that a reader never has to infer which kind of actor it holds from which fields happen to be set. actor declares no kind and is closed, so it can never carry one: the two shapes are disjoint by construction rather than by the absence of a field.",
+          "const": "signing_key"
+        },
+        "key_id": {
+          "description": "The key whose Ed25519 signature over the instruction was verified before the instruction was applied. No time is recorded beside it: verification happens at the publisher, immediately before the event that carries this actor, and that event already carries occurred_at. Two records able to disagree about one instant are worse evidence than one.",
+          "$ref": "#/$defs/key_id"
+        }
+      }
+    },
     "on_timeout": {
       "description": "What Conductor does when an interaction expires unresolved.",
       "enum": ["deny", "abort_activity"]

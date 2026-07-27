@@ -10,6 +10,12 @@
     "interaction_id": { "$ref": "../common.json#/$defs/identifier" },
     "resolution": { "enum": ["allowed", "denied", "expired"] },
     "reason": { "type": "string", "maxLength": 4096 },
-    "actor": { "$ref": "../common.json#/$defs/actor" }
+    "actor": {
+      "description": "Who authorised this resolution. Exactly one of two shapes, never a blend of them and never a partial one: an attested human, which a saas-attested envelope carries because a service acted for a person it authenticated; or a signing key, which is the only identity a deployment with no user directory has. The union exists here and not on the shared actor definition because permission.resolved is the record a reviewer reads to answer who allowed this, and it is the one event a Conductor with no user directory must still be able to answer it for. Absent when nobody authorised anything - resolution: expired is the deadline speaking, not a person.",
+      "oneOf": [
+        { "$ref": "../common.json#/$defs/actor" },
+        { "$ref": "../common.json#/$defs/key_actor" }
+      ]
+    }
   }
 }
