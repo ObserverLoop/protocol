@@ -31,7 +31,7 @@ for JSON, are listed above) and are committed. `make generate` followed by
 ## Go module
 
 ```
-go get github.com/ObserverLoop/protocol/go@v0.0.3
+go get github.com/ObserverLoop/protocol/go@v0.0.4
 ```
 
 The module lives in the `go/` subdirectory. Import path:
