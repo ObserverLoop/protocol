@@ -31,7 +31,7 @@ for JSON, are listed above) and are committed. `make generate` followed by
 ## Go module
 
 ```
-go get github.com/ObserverLoop/protocol/go@v0.0.1
+go get github.com/ObserverLoop/protocol/go@v0.0.3
 ```
 
 The module lives in the `go/` subdirectory. Import path:
@@ -57,6 +57,9 @@ has no schema or no fixture.
 - `SigningBytes` is the RFC 8785 canonical form with `signature` omitted.
 - No payload schema declares a `reasoning`, `thinking`, or `chain_of_thought`
   property, at any depth.
+- `tool.call` carries no tool arguments and `tool.result` carries no tool
+  output. Both bind to the local raw capture by digest instead; the payload
+  roots are closed, so a publisher cannot add them.
 - An unknown protocol MAJOR is rejected; an unknown MINOR is accepted.
 
 ## Development
