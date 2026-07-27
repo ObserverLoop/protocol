@@ -12,9 +12,9 @@ type EventType string
 // root carries MAJOR only: an unknown MAJOR is rejected, an unknown MINOR is
 // accepted.
 const (
-	ProtocolVersion = "1.0"
+	ProtocolVersion = "1.1"
 	ProtocolMajor   = 1
-	ProtocolMinor   = 0
+	ProtocolMinor   = 1
 )
 
 const (
@@ -31,6 +31,8 @@ const (
 	EventPermissionResolved  EventType = "permission.resolved"
 	EventQuestionRequested   EventType = "question.requested"
 	EventQuestionResolved    EventType = "question.resolved"
+	EventToolCall            EventType = "tool.call"
+	EventToolResult          EventType = "tool.result"
 )
 
 // eventTypes is sorted by token so that AllEventTypes is deterministic.
@@ -48,6 +50,8 @@ var eventTypes = []EventType{
 	EventPermissionResolved,
 	EventQuestionRequested,
 	EventQuestionResolved,
+	EventToolCall,
+	EventToolResult,
 }
 
 // eventTypeSet backs ParseEventType.
@@ -65,6 +69,8 @@ var eventTypeSet = map[EventType]struct{}{
 	EventPermissionResolved:  {},
 	EventQuestionRequested:   {},
 	EventQuestionResolved:    {},
+	EventToolCall:            {},
+	EventToolResult:          {},
 }
 
 // schemaPaths maps each event type to its payload schema, relative to the
@@ -83,4 +89,6 @@ var schemaPaths = map[EventType]string{
 	EventPermissionResolved:  "schemas/payload/permission.resolved.json",
 	EventQuestionRequested:   "schemas/payload/question.requested.json",
 	EventQuestionResolved:    "schemas/payload/question.resolved.json",
+	EventToolCall:            "schemas/payload/tool.call.json",
+	EventToolResult:          "schemas/payload/tool.result.json",
 }

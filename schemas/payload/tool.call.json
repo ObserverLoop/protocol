@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/tool.call.json",
+  "title": "tool.call",
+  "description": "An agent invoked a tool. This is what makes the thread timeline evidence rather than conversation: a durable, signed record that an action was attempted, by which agent, with which tool, against what target. It deliberately carries no tool arguments. Arguments are model-generated free-form text, they are the place where secrets and reasoning reach the wire, and this event is replicated and retained for the life of the stream; the verbatim arguments stay in the local raw capture and are bound to this record by arguments_digest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["call_id", "agent_id", "tool_name"],
+  "properties": {
+    "call_id": {
+      "description": "Correlates this call with the tool.result that answers it. Minted by the publisher - the Conductor process that observes the invocation - as a UUIDv7, and never taken from the harness: harness call identifiers differ in shape between harnesses, are unique only within one session, and are not values this protocol controls. Because it is a protocol identifier it is also safe on a subject.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "agent_id": {
+      "description": "The agent that made the call. Attribution is required, not derived from the envelope: an event that has been forwarded is still readable on its own, and 'who did this' is the first question asked of any tool record.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "activity_id": {
+      "description": "The activity the call belongs to, when the agent is executing one. It scopes the call to a unit of work that has a plan, a lease, and a budget.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "tool_name": {
+      "description": "The tool the agent invoked, as its harness names it - for example \"bash\", \"read_file\", or an MCP tool name. A name only; never a rendered invocation.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "target": {
+      "description": "What the call acted on, structured so that a timeline can be filtered, gated, and audited without anyone parsing an argument blob. Omitted when the publisher cannot derive a single target: an emitter that would have to concatenate arguments to fill this in must publish no target instead.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "reference"],
+      "properties": {
+        "kind": {
+          "description": "path: a filesystem path, file or directory. command: the executable or subcommand invoked, without its arguments. url: a network endpoint. resource: anything else addressable by a stable name, such as an MCP resource or a record identifier.",
+          "enum": ["path", "command", "url", "resource"]
+        },
+        "reference": {
+          "description": "The target itself, bounded and passed through the redaction pass before publication. It is one reference, not a command line and not an argument dump; when redaction fired, redacted is true.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      }
+    },
+    "arguments_digest": {
+      "description": "sha256 over the RFC 8785 canonical form of the arguments the tool was called with. It binds this record to one specific invocation, so a later dispute can be settled against the local raw capture without the arguments ever being published.",
+      "$ref": "../common.json#/$defs/digest"
+    },
+    "redacted": { "$ref": "../common.json#/$defs/redacted" }
+  }
+}

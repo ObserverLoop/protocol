@@ -44,6 +44,10 @@
     "on_timeout": {
       "description": "What Conductor does when an interaction expires unresolved.",
       "enum": ["deny", "abort_activity"]
+    },
+    "redacted": {
+      "description": "True when the redaction pass replaced secret material in a free-form field of this payload before the envelope was signed. It tells a reader that the published text is not verbatim. The count of replacements, never the matched content, is carried by a separate audit.security record.",
+      "type": "boolean"
     }
   }
 }

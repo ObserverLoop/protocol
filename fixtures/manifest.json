@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -204,6 +204,40 @@
       "fixtures": [
         "fixtures/valid/question.resolved.json"
       ]
+    },
+    {
+      "type": "tool.call",
+      "schema": "schemas/payload/tool.call.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "thread.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/tool.call.gated.json",
+        "fixtures/valid/tool.call.json",
+        "fixtures/valid/tool.call.shell.json"
+      ]
+    },
+    {
+      "type": "tool.result",
+      "schema": "schemas/payload/tool.result.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "thread.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/tool.result.failed.json",
+        "fixtures/valid/tool.result.json",
+        "fixtures/valid/tool.result.not-run.json"
+      ]
     }
   ],
   "invalid": [
@@ -274,6 +308,22 @@
     {
       "fixture": "fixtures/invalid/timestamp-without-milliseconds.json",
       "reason": "occurred_at is RFC 3339 UTC at exactly millisecond precision, because it is inside the signed canonical form"
+    },
+    {
+      "fixture": "fixtures/invalid/tool-call-carries-arguments.json",
+      "reason": "tool.call carries no tool arguments; the payload root is closed, so a verbatim argument dump has nowhere to go"
+    },
+    {
+      "fixture": "fixtures/invalid/tool-call-target-reference-too-long.json",
+      "reason": "target.reference is bounded at 2048 characters; an emitter that renders a whole invocation into it is rejected rather than truncated"
+    },
+    {
+      "fixture": "fixtures/invalid/tool-result-carries-output.json",
+      "reason": "tool output is never published; the payload root is closed, so verbatim output cannot reach the stream even when a publisher tries"
+    },
+    {
+      "fixture": "fixtures/invalid/tool-result-failed-without-error.json",
+      "reason": "an outcome other than succeeded requires error, so a failure can never be recorded without a cause"
     },
     {
       "fixture": "fixtures/invalid/unknown-event-type.json",

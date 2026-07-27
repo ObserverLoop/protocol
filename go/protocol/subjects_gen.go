@@ -36,4 +36,6 @@ var eventSubjectClasses = map[EventType]subjectClass{
 	EventPermissionResolved:  subjectClassThread,
 	EventQuestionRequested:   subjectClassThread,
 	EventQuestionResolved:    subjectClassThread,
+	EventToolCall:            subjectClassThread,
+	EventToolResult:          subjectClassThread,
 }

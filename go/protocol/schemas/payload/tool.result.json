@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/tool.result.json",
+  "title": "tool.result",
+  "description": "The outcome of one tool.call: whether the tool ran, whether it succeeded, how long it took, and why it did not. It carries none of the tool's output. Output is unbounded content produced outside this protocol and is the likeliest place for file contents, credentials, and model-generated text to reach a durable replicated stream; it stays in the local raw capture and is bound to this record by output_digest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["call_id", "outcome"],
+  "properties": {
+    "call_id": {
+      "description": "The tool.call this result answers, using the identifier that call's publisher minted. tool_name and target are deliberately not repeated: they are on the call, and two records able to disagree about one fact are worse evidence than one record.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "outcome": {
+      "description": "succeeded: the tool ran and reported success. failed: the tool ran and reported an error, so its effects may be partial but are possible. not_run: the tool never executed, so no effect is possible - denied at a permission gate, expired unresolved, or refused before dispatch. failed and not_run are distinct values because a reviewer, and a retry, must treat them differently.",
+      "enum": ["succeeded", "failed", "not_run"]
+    },
+    "duration_ms": {
+      "description": "Wall-clock milliseconds from dispatch to result. Absent when the tool did not run, or when the harness reports no duration; it is never estimated.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "error": {
+      "description": "Why the call failed or never ran. Required whenever outcome is not succeeded: an unexplained failure is not evidence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": {
+          "description": "A stable machine-readable cause a consumer may branch on - for example permission_denied, timeout, or not_found. Chosen by the publisher from its own vocabulary, never copied out of tool output.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "message": {
+          "description": "A short operator-facing description of the failure, passed through the redaction pass. Bounded far below what a tool can emit, and deliberately so: this is one sentence a human reads in a timeline, not captured stderr. A publisher with more to say says it in code, not in prose.",
+          "type": "string",
+          "maxLength": 1024
+        }
+      }
+    },
+    "output_digest": {
+      "description": "sha256 over the tool's output exactly as written to the local raw capture. It binds this record to output that is never published, so a reviewer with local access can confirm the bytes they hold are the ones this result describes.",
+      "$ref": "../common.json#/$defs/digest"
+    },
+    "redacted": { "$ref": "../common.json#/$defs/redacted" }
+  },
+  "allOf": [
+    {
+      "description": "A result that is not a success must say why. Expressed as a conditional because the requirement is on the value of outcome, not on its presence.",
+      "if": {
+        "required": ["outcome"],
+        "properties": { "outcome": { "const": "succeeded" } }
+      },
+      "else": { "required": ["error"] }
+    }
+  ]
+}

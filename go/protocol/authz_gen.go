@@ -52,6 +52,8 @@ var eventTrustDomains = map[EventType][]TrustDomain{
 	EventPermissionResolved:  {TrustDomainTenant, TrustDomainSaaSAttested},
 	EventQuestionRequested:   {TrustDomainTenant},
 	EventQuestionResolved:    {TrustDomainTenant, TrustDomainSaaSAttested},
+	EventToolCall:            {TrustDomainTenant},
+	EventToolResult:          {TrustDomainTenant},
 }
 
 var eventCapabilities = map[EventType][]Capability{
@@ -68,6 +70,8 @@ var eventCapabilities = map[EventType][]Capability{
 	EventPermissionResolved:  {CapabilityInteractionResolve},
 	EventQuestionRequested:   {CapabilityInteractionRequest},
 	EventQuestionResolved:    {CapabilityInteractionResolve},
+	EventToolCall:            {CapabilityThreadWrite},
+	EventToolResult:          {CapabilityThreadWrite},
 }
 
 var eventDurability = map[EventType]Durability{
@@ -84,4 +88,6 @@ var eventDurability = map[EventType]Durability{
 	EventPermissionResolved:  DurabilityJetStream,
 	EventQuestionRequested:   DurabilityJetStream,
 	EventQuestionResolved:    DurabilityJetStream,
+	EventToolCall:            DurabilityJetStream,
+	EventToolResult:          DurabilityJetStream,
 }

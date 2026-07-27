@@ -7,7 +7,11 @@
 # entry here plus one schema file plus one fixture; nothing else is hand-edited.
 #
 # `version` is the protocol MAJOR.MINOR. The subject root carries MAJOR only.
-version: "1.0"
+#
+# 1.1 added tool.call and tool.result. Adding an event type is additive: an
+# unknown MINOR is accepted, and an unknown event type is retained but acted on
+# by nobody, so a 1.0 consumer is unaffected.
+version: "1.1"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and
@@ -134,3 +138,22 @@ events:
     durability: jetstream
     trust_domains: [tenant, saas-attested]
     capabilities: [interaction.resolve]
+
+  # The tool pair is the thread timeline's evidence: what an agent actually did,
+  # and what a permission gate gated. Agent-emitted thread content, so it carries
+  # thread.write like the other agent-emitted thread events. A new capability
+  # token would have to be granted by every existing delegation before an agent
+  # could record a tool call at all, which is not an additive change.
+  - type: tool.call
+    schema: schemas/payload/tool.call.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [thread.write]
+
+  - type: tool.result
+    schema: schemas/payload/tool.result.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [thread.write]
