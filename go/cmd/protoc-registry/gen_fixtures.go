@@ -8,7 +8,9 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
+	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -28,6 +30,22 @@ const (
 	// signing is deterministic, so regenerating produces byte-identical output.
 	fixtureKeyMaterial = "observerloop.protocol.fixtures.v1"
 )
+
+// embeddedFixtureDir is the verbatim mirror of fixtureDir inside the Go module.
+//
+// The corpus is part of the contract, not scaffolding for this repository's own
+// tests: a consumer that has the module but cannot run the vectors has half of
+// what the module is for. Go's embed directive cannot reach outside its own
+// module directory and the module lives in go/, so the corpus is copied rather
+// than referenced — the same arrangement, for the same reason, as the schema
+// tree. The copy is generated, and `make generate` plus `git diff --exit-code`
+// is what keeps it identical to the source.
+//
+// It lives beside the conformance runner rather than in go/protocol because
+// go/protocol is linked into every consumer's production binary and the corpus
+// is only ever needed by tests. Nothing that imports the wire binding pays for
+// it.
+var embeddedFixtureDir = filepath.Join("go", "conformance", fixtureDir)
 
 // genFixtures writes the coverage manifest and the cross-language Ed25519
 // signing vectors. The fixture envelopes themselves are hand-written; only the
@@ -54,7 +72,69 @@ func genFixtures(root string, reg *registry) error {
 	if err := writeManifest(root, reg, index, invalidEntries); err != nil {
 		return err
 	}
-	return writeSigningVectors(root, valid)
+	if err := writeSigningVectors(root, valid); err != nil {
+		return err
+	}
+
+	// Last, and it must stay last: the mirror copies what the steps above have
+	// just written, so a mirror taken before them would publish the previous
+	// run's manifest and vectors.
+	return mirrorFixtures(root)
+}
+
+// mirrorFixtures copies the fixture tree into the Go module and deletes
+// anything there the source no longer contains, so a fixture that is renamed or
+// withdrawn cannot survive in the embedded copy.
+func mirrorFixtures(root string) error {
+	base := filepath.Join(root, fixtureDir)
+	want := map[string]bool{}
+
+	err := filepath.WalkDir(base, func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() || !strings.HasSuffix(d.Name(), ".json") {
+			return nil
+		}
+		rel, err := filepath.Rel(base, p)
+		if err != nil {
+			return fmt.Errorf("relativising %s: %w", p, err)
+		}
+		//nolint:gosec // p comes from walking the fixture directory under -root
+		body, err := os.ReadFile(p)
+		if err != nil {
+			return fmt.Errorf("reading %s: %w", p, err)
+		}
+		want[path.Clean(filepath.ToSlash(rel))] = true
+		return writeFile(filepath.Join(root, embeddedFixtureDir, rel), body)
+	})
+	if err != nil {
+		return fmt.Errorf("walking %s: %w", fixtureDir, err)
+	}
+
+	mirror := filepath.Join(root, embeddedFixtureDir)
+	return filepath.WalkDir(mirror, func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			if os.IsNotExist(err) {
+				return nil
+			}
+			return err
+		}
+		if d.IsDir() {
+			return nil
+		}
+		rel, err := filepath.Rel(mirror, p)
+		if err != nil {
+			return err
+		}
+		if want[path.Clean(filepath.ToSlash(rel))] {
+			return nil
+		}
+		if err := os.Remove(p); err != nil {
+			return fmt.Errorf("removing stale %s: %w", p, err)
+		}
+		return nil
+	})
 }
 
 // fixture is one fixture file: its name without extension, and its bytes.

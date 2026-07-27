@@ -41,7 +41,7 @@ func TestGeneratedFilesAreCurrent(t *testing.T) {
 
 // generatedDirs are the trees whose entire contents the generator owns.
 func generatedDirs() []string {
-	return []string{goPackageDir, filepath.FromSlash(signingDir)}
+	return []string{goPackageDir, filepath.FromSlash(signingDir), embeddedFixtureDir}
 }
 
 // scratchRoot is an empty repository root that carries only the generator's

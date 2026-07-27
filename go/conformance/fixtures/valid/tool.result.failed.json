@@ -1,0 +1,29 @@
+{
+  "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+  "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e31",
+  "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+  "delegation_chain": [],
+  "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e32",
+  "event_type": "tool.result",
+  "occurred_at": "2026-07-26T12:00:32.000Z",
+  "payload": {
+    "call_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e87",
+    "duration_ms": 1503,
+    "error": {
+      "code": "exit_status",
+      "message": "the tool ran and exited non-zero; its output is in the local raw capture"
+    },
+    "outcome": "failed",
+    "output_digest": "sha256:cececececececececececececececececececececececececececececececece",
+    "redacted": true
+  },
+  "protocol_version": "1.1",
+  "sequence": 32,
+  "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+  "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+  "tenant_id": "acme",
+  "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+  "trust_domain": "tenant",
+  "workspace_id": "platform"
+}
