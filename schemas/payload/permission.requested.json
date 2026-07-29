@@ -2,18 +2,54 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://schemas.observerloop.com/ol/v1/payload/permission.requested.json",
   "title": "permission.requested",
-  "description": "An agent asks a human to authorise a tool invocation. The envelope's expires_at bounds it; on expiry Conductor emits permission.resolved with resolution: expired and applies on_timeout.",
+  "description": "An agent asks a human to authorise a tool invocation. The envelope's expires_at bounds it; on expiry Conductor emits permission.resolved with resolution: expired and applies on_timeout. A human cannot decide from a tool name alone, so this payload carries a bounded, redacted rendering of the arguments in `arguments` - and nothing larger. It is the one payload here that publishes model-written text on purpose, because refusing to means the gate can only be answered on trust.",
   "type": "object",
   "additionalProperties": false,
   "required": ["interaction_id", "agent_id", "tool_name", "on_timeout"],
   "properties": {
-    "interaction_id": { "$ref": "../common.json#/$defs/identifier" },
-    "agent_id": { "$ref": "../common.json#/$defs/identifier" },
-    "activity_id": { "$ref": "../common.json#/$defs/identifier" },
-    "lease_id": { "$ref": "../common.json#/$defs/identifier" },
-    "tool_name": { "type": "string", "minLength": 1, "maxLength": 128 },
-    "tool_input": { "type": "object" },
-    "risk": { "enum": ["low", "medium", "high"] },
-    "on_timeout": { "$ref": "../common.json#/$defs/on_timeout" }
+    "interaction_id": {
+      "description": "The interaction a permission.resolved will answer. It is what a human names when they allow or deny, and what joins the request to its resolution.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "agent_id": {
+      "description": "The agent whose call is being held. Attribution is required, not derived from the envelope: an event that has been forwarded is still readable on its own.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "activity_id": {
+      "description": "The activity the held call belongs to, when the agent is executing one. Absent for an agent that is researching or planning, which runs outside any activity.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "lease_id": {
+      "description": "The lease the held call is covered by, when the agent holds one. Absent when it does not.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "tool_name": {
+      "description": "The tool the agent is asking to invoke, as its harness names it - for example \"bash\", \"write\", or an MCP tool name. A name only; never a rendered invocation.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "arguments": {
+      "description": "What the agent is asking to do, rendered so that a human can decide: the tool's arguments as a JSON document, passed through the redaction pass, then truncated to this bound. It is the same string the publisher holds locally in full - a prefix of it, never a second rendering - so the two differ in length and in nothing else, and arguments_truncated says when they do. When redaction fired, redacted is true. Bounded at 2048 characters, matching tool.call.target.reference, because this field exists so that a person can read one invocation and not so that the stream can carry a file: an emitter with more than this publishes a prefix and leaves the rest where the tool.call's arguments_digest points. Omitted when the harness reported no arguments.",
+      "type": "string",
+      "maxLength": 2048
+    },
+    "arguments_truncated": {
+      "description": "True when arguments is a prefix of the full redacted rendering rather than the whole of it. It is published because a silently cut command line reads as a complete one, and a human deciding on \"rm -rf /data\" must be told when the characters after it were \" --dry-run\". The complete rendering is not published at all; it stays with the publisher.",
+      "type": "boolean"
+    },
+    "tool_input": {
+      "description": "Superseded by arguments, and never populated. It is an unbounded object, which is what must not reach a stream that is signed, replicated, and retained for the life of the deployment; the bounded, redacted, truncatable arguments string replaces it. Narrowing or removing this field is a MAJOR break, so it stays declared and unused until 1.0, where it should be removed. An emitter that fills it in is publishing an unbounded arguments dump and is wrong to.",
+      "type": "object"
+    },
+    "risk": {
+      "description": "The publisher's own classification of how dangerous the held call is, when it makes one. Advisory: it may inform how a request is surfaced, and it is never the authorisation itself.",
+      "enum": ["low", "medium", "high"]
+    },
+    "on_timeout": {
+      "description": "What happens if nobody answers before the envelope's expires_at. deny releases the call as unauthorised; abort_activity additionally ends the activity. There is no allow-on-timeout: a gate that authorises when unanswered is not a gate.",
+      "$ref": "../common.json#/$defs/on_timeout"
+    },
+    "redacted": { "$ref": "../common.json#/$defs/redacted" }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "version": "1.2",
+  "version": "1.3",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -154,6 +154,7 @@
         "interaction.request"
       ],
       "fixtures": [
+        "fixtures/valid/permission.requested.arguments.json",
         "fixtures/valid/permission.requested.json"
       ]
     },
@@ -305,6 +306,14 @@
     {
       "fixture": "fixtures/invalid/permission-actor-without-discriminator.json",
       "reason": "an actor carrying a key_id but no kind satisfies neither shape: the signing key variant requires its discriminator, and a consumer is never asked to infer the variant from which fields are present"
+    },
+    {
+      "fixture": "fixtures/invalid/permission-arguments-too-long.json",
+      "reason": "permission.requested.arguments is bounded at 2048 characters; an emitter that renders a whole file into the field a human reads is rejected rather than truncated for it, because truncating on the reader's side is what loses the guarantee that the published string is a prefix of the one the publisher stored"
+    },
+    {
+      "fixture": "fixtures/invalid/permission-redacted-not-boolean.json",
+      "reason": "redacted is a boolean, not prose. It is the flag that tells a reader the published arguments are not verbatim, and a consumer that had to interpret a string here could read a truthy \"no\""
     },
     {
       "fixture": "fixtures/invalid/short-signature.json",

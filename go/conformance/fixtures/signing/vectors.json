@@ -457,6 +457,43 @@
     }
   },
   {
+    "name": "permission.requested.arguments",
+    "fixture": "fixtures/valid/permission.requested.arguments.json",
+    "event_type": "permission.requested",
+    "canonical_base64": "eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTAxIiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTM1IiwiZXZlbnRfdHlwZSI6InBlcm1pc3Npb24ucmVxdWVzdGVkIiwiZXhwaXJlc19hdCI6IjIwMjYtMDctMjdUMTI6MDA6MDAuMDAwWiIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDozNS4wMDBaIiwicGF5bG9hZCI6eyJhY3Rpdml0eV9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MSIsImFnZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkyIiwiYXJndW1lbnRzIjoie1wiY29tbWFuZFwiOlwicm0gLXJmIC9zcnYvYXBwL3JlbGVhc2VzLzIwMjYtMDctMDFcIixcImRlc2NyaXB0aW9uXCI6XCJkcm9wIHRoZSBzdXBlcnNlZGVkIHJlbGVhc2VcIn0iLCJhcmd1bWVudHNfdHJ1bmNhdGVkIjpmYWxzZSwiaW50ZXJhY3Rpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlODEiLCJvbl90aW1lb3V0IjoiZGVueSIsInJlZGFjdGVkIjpmYWxzZSwicmlzayI6ImhpZ2giLCJ0b29sX25hbWUiOiJiYXNoIn0sInByb3RvY29sX3ZlcnNpb24iOiIxLjMiLCJzZXF1ZW5jZSI6MzUsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2FnZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkyIiwidGVuYW50X2lkIjoiYWNtZSIsInRocmVhZF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MCIsInRydXN0X2RvbWFpbiI6InRlbmFudCIsIndvcmtzcGFjZV9pZCI6InBsYXRmb3JtIn0=",
+    "canonical_sha256": "4664159fe22dd0837de541fad14307a9fe70d27fe7cde79d79c2e64b7e99cd75",
+    "signature": "H1nxn9UPZHAfGdRRUX7LeeBxQ7sMNKCwSgSshYC3lA4tfklZ_rFEsYMatc49xTx6ifIgel9wDdkl1-bLo1u2DQ",
+    "envelope": {
+      "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e35",
+      "event_type": "permission.requested",
+      "expires_at": "2026-07-27T12:00:00.000Z",
+      "occurred_at": "2026-07-26T12:00:35.000Z",
+      "payload": {
+        "activity_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "arguments": "{\"command\":\"rm -rf /srv/app/releases/2026-07-01\",\"description\":\"drop the superseded release\"}",
+        "arguments_truncated": false,
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e81",
+        "on_timeout": "deny",
+        "redacted": false,
+        "risk": "high",
+        "tool_name": "bash"
+      },
+      "protocol_version": "1.3",
+      "sequence": 35,
+      "signature": "H1nxn9UPZHAfGdRRUX7LeeBxQ7sMNKCwSgSshYC3lA4tfklZ_rFEsYMatc49xTx6ifIgel9wDdkl1-bLo1u2DQ",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
     "name": "permission.resolved.allowed",
     "fixture": "fixtures/valid/permission.resolved.allowed.json",
     "event_type": "permission.resolved",

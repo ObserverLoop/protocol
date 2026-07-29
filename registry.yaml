@@ -17,7 +17,15 @@
 # unchanged and still validates, and the new shape is one a 1.1 consumer would
 # have rejected as an actor it could not read rather than misread as one it
 # could.
-version: "1.2"
+#
+# 1.3 gave permission.requested a bounded, redacted `arguments` string, with
+# `arguments_truncated` and the payload-level `redacted` flag beside it. Before
+# it, the only publishable description of a held call was a tool name and a
+# target, and a human shown "bash command=rm" could not tell `rm -rf /tmp/x`
+# from `rm -rf /`. Additive: the three fields are optional, a 1.2 consumer
+# ignores them, and the unbounded `tool_input` it may have expected is
+# unchanged, still declared, and still never populated.
+version: "1.3"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and
