@@ -25,7 +25,25 @@
 # from `rm -rf /`. Additive: the three fields are optional, a 1.2 consumer
 # ignores them, and the unbounded `tool_input` it may have expected is
 # unchanged, still declared, and still never populated.
-version: "1.3"
+#
+# 1.4 added `idle` to agent.lifecycle's state enum. Every other state in that
+# list describes the process behind an agent — it is starting, it is running, it
+# has stopped — which was the whole vocabulary a producer needed while an agent
+# and the process running it began and ended together. An agent that outlives the
+# turn it was started for has a state none of them fits: it has finished a turn,
+# its process is still there, and it is waiting for the next message. `stopped`
+# would claim an exit that has not happened, and `running` would leave a consumer
+# reading the thread as busy.
+#
+# Additive, with one thing worth saying plainly. A consumer that switches on the
+# enum and treats an unrecognised state as informational is unaffected, which is
+# the documented rule for an unknown MINOR. A consumer that derives "the turn is
+# over" from `stopped` alone will, against a producer that emits `idle`, see a
+# turn that never ends — so a 1.3 consumer is compatible with a 1.4 producer only
+# for as long as that producer does not keep agents alive between turns. That is
+# a property of the deployment, not of the schema, and it is why this is a MINOR
+# rather than a patch.
+version: "1.4"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and

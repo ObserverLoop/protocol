@@ -12,9 +12,9 @@ type EventType string
 // root carries MAJOR only: an unknown MAJOR is rejected, an unknown MINOR is
 // accepted.
 const (
-	ProtocolVersion = "1.3"
+	ProtocolVersion = "1.4"
 	ProtocolMajor   = 1
-	ProtocolMinor   = 3
+	ProtocolMinor   = 4
 )
 
 const (

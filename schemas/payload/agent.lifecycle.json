@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://schemas.observerloop.com/ol/v1/payload/agent.lifecycle.json",
   "title": "agent.lifecycle",
-  "description": "A transition in one agent process's lifecycle.",
+  "description": "A transition in one agent's lifecycle. Every state but idle describes the process behind the agent; idle describes an agent that has finished a turn and still has its process.",
   "type": "object",
   "additionalProperties": false,
   "required": ["agent_id", "state"],
   "properties": {
     "agent_id": { "$ref": "../common.json#/$defs/identifier" },
     "state": {
-      "enum": ["starting", "running", "blocked", "stopping", "stopped", "failed"]
+      "enum": ["starting", "running", "blocked", "idle", "stopping", "stopped", "failed"]
     },
     "harness": { "type": "string", "maxLength": 64 },
     "definition_digest": { "$ref": "../common.json#/$defs/digest" },

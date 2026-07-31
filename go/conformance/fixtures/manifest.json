@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -13,6 +13,7 @@
         "agent.lifecycle"
       ],
       "fixtures": [
+        "fixtures/valid/agent.lifecycle.idle.json",
         "fixtures/valid/agent.lifecycle.running.json"
       ]
     },
