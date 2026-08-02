@@ -292,6 +292,7 @@ func TestSubjectsBuildForEveryFixture(t *testing.T) {
 				ConductorID: "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
 				CommandID:   "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e83",
 				AgentID:     "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+				QueryID:     "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f81",
 			}
 			if envelope.ThreadID != nil {
 				params.ThreadID = *envelope.ThreadID
@@ -340,4 +341,35 @@ func TestEmbeddedFixturesMatchTheSource(t *testing.T) {
 		return nil
 	}))
 	require.Equal(t, onDisk, count, "the embedded corpus and fixtures/ hold different numbers of files")
+}
+
+// coreMessageLimit is the default NATS max_payload. A reply that exceeds it is
+// not delivered, and a query.result is carried on core NATS with nothing behind
+// it to retry, so a responder that overruns this produces silence.
+const coreMessageLimit = 1024 * 1024
+
+// TestQueryResultsFitOneCoreMessage. A query.result is a reply, and a reply that
+// does not fit is not sent at all.
+//
+// The item count cannot be what keeps it inside the limit: chat.message.text is
+// bounded at a megabyte on its own, so a schema-legal page of a hundred messages
+// is a hundred times what a broker will carry. The bound a responder honours is
+// bytes, and limit is where it reports how many entries that turned out to be.
+// This asserts the shipped vectors are inside it, and stands as the statement of
+// which bound is the real one.
+func TestQueryResultsFitOneCoreMessage(t *testing.T) {
+	manifest := loadManifest(t)
+
+	checked := 0
+	for _, event := range manifest.Events {
+		if event.Type != "query.result" && event.Type != "query.request" {
+			continue
+		}
+		for _, path := range event.Fixtures {
+			body := readCorpus(t, path)
+			require.Less(t, len(body), coreMessageLimit, path)
+			checked++
+		}
+	}
+	require.NotZero(t, checked, "the query pair has no fixtures, so this asserts nothing")
 }

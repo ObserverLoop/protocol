@@ -43,7 +43,37 @@
 # for as long as that producer does not keep agents alive between turns. That is
 # a property of the deployment, not of the schema, and it is why this is a MINOR
 # rather than a patch.
-version: "1.4"
+# 1.5 added the query pair: query.request and query.result. Until it, a client
+# could write and could follow, and could not ask. The threads of a workspace,
+# the interactions waiting for a human, and the messages of one thread were
+# reachable only by consuming the event stream from its beginning — so every
+# client rebuilt every thread from a ninety-day retention window at every start,
+# and a client that could not read the deployment's own database could not learn
+# what the deployment was running.
+#
+# The pair is core rather than jetstream, and the topology enforces that rather
+# than documenting it: neither subject class is named by a stream, and the
+# generator refuses a jetstream event on an unbound class. A read is
+# request-scoped. Retaining answers would write the same events a second time,
+# inside the stream that already holds them, once for every client that ever
+# scrolled — and redelivering yesterday's answer to "what is in this thread" is
+# worse than no answer.
+#
+# thread.history answers with the envelopes as they were published, rather than
+# with rows read out of a projection. The client verifies each one exactly as it
+# verifies what arrives on the stream, so history obtained by asking is the same
+# evidence as history obtained by following. The other kinds cannot do that and
+# do not pretend to: a thread's state, the pending interactions, and what the
+# daemon is running are the responder's own account, signed by the responder.
+#
+# Additive in both directions that matter. A 1.4 consumer subscribes to neither
+# subject and is unaffected, and the two new capabilities are held by no existing
+# key, so nothing accepted today is refused tomorrow. The one thing to say
+# plainly: a 1.4 producer cannot answer, and because the reply is core there is
+# no delivery machinery to report that. A 1.5 client hears "this deployment does
+# not serve queries" and "the daemon is not there" as the same silence, and must
+# not present the second as the first.
+version: "1.5"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and
@@ -53,6 +83,12 @@ subject_classes:
   conductor_command: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.command.{type}
   conductor_result: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.result.{command_id}.{type}
   audit: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.audit.{type}
+  # The read pair. Keyed by the request's own identifier, as conductor_result is
+  # keyed by the command's, so a client subscribes to the reply it is about to
+  # ask for and needs no inbox convention of its own. Named by no stream, which
+  # is what makes them core.
+  conductor_query: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.query.{type}
+  conductor_query_result: ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.query_result.{query_id}.{type}
 
 # Stream subject bindings are derived from the subject classes, never written by
 # hand. The generator substitutes tenant and workspace, replaces every other
@@ -170,6 +206,28 @@ events:
     durability: jetstream
     trust_domains: [tenant, saas-attested]
     capabilities: [interaction.resolve]
+
+  # The read pair. query.issue and query.serve are new tokens rather than the
+  # command ones, so a key may be allowed to ask without being allowed to act —
+  # which is the whole of what a viewer, a dashboard, or an auditor needs.
+  #
+  # saas-attested may ask, as it may issue a command, because a service reading
+  # on behalf of a person it authenticated is the same arrangement. Only the
+  # tenant may answer: an attested service is not the deployment and cannot
+  # speak for its database.
+  - type: query.request
+    schema: schemas/payload/query.request.json
+    subject_class: conductor_query
+    durability: core
+    trust_domains: [tenant, saas-attested]
+    capabilities: [query.issue]
+
+  - type: query.result
+    schema: schemas/payload/query.result.json
+    subject_class: conductor_query_result
+    durability: core
+    trust_domains: [tenant]
+    capabilities: [query.serve]
 
   # The tool pair is the thread timeline's evidence: what an agent actually did,
   # and what a permission gate gated. Agent-emitted thread content, so it carries

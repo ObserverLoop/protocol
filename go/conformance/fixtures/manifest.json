@@ -1,5 +1,5 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -178,6 +178,42 @@
       ]
     },
     {
+      "type": "query.request",
+      "schema": "schemas/payload/query.request.json",
+      "subject_class": "conductor_query",
+      "durability": "core",
+      "trust_domains": [
+        "tenant",
+        "saas-attested"
+      ],
+      "capabilities": [
+        "query.issue"
+      ],
+      "fixtures": [
+        "fixtures/valid/query.request.history.json",
+        "fixtures/valid/query.request.status.json"
+      ]
+    },
+    {
+      "type": "query.result",
+      "schema": "schemas/payload/query.result.json",
+      "subject_class": "conductor_query_result",
+      "durability": "core",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "query.serve"
+      ],
+      "fixtures": [
+        "fixtures/valid/query.result.error.json",
+        "fixtures/valid/query.result.history.json",
+        "fixtures/valid/query.result.interactions.json",
+        "fixtures/valid/query.result.status.json",
+        "fixtures/valid/query.result.threads.json"
+      ]
+    },
+    {
       "type": "question.requested",
       "schema": "schemas/payload/question.requested.json",
       "subject_class": "thread",
@@ -315,6 +351,26 @@
     {
       "fixture": "fixtures/invalid/permission-redacted-not-boolean.json",
       "reason": "redacted is a boolean, not prose. It is the flag that tells a reader the published arguments are not verbatim, and a consumer that had to interpret a string here could read a truthy \"no\""
+    },
+    {
+      "fixture": "fixtures/invalid/query-history-without-thread.json",
+      "reason": "kind thread.history must name the thread it asks about; without thread_id the request cannot be answered and must not be guessed at"
+    },
+    {
+      "fixture": "fixtures/invalid/query-limit-over-bound.json",
+      "reason": "limit is bounded at 100 because the reply must fit inside one core NATS message; a request for more is refused rather than silently reduced"
+    },
+    {
+      "fixture": "fixtures/invalid/query-result-error-with-answer.json",
+      "reason": "a result that failed carries no answer beside the failure; half a page that does not say it is half is worse than a refusal"
+    },
+    {
+      "fixture": "fixtures/invalid/query-result-kind-mismatch.json",
+      "reason": "each kind carries its own answer and no other; a thread.history result holding threads would have a client read the wrong field and find something that looks right"
+    },
+    {
+      "fixture": "fixtures/invalid/query-status-with-thread.json",
+      "reason": "only thread.history is about a thread; a status request that names one has misunderstood what it is asking and is refused rather than answered about something else"
     },
     {
       "fixture": "fixtures/invalid/short-signature.json",

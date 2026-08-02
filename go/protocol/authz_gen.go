@@ -23,6 +23,8 @@ const (
 	CapabilityCommandIssue       Capability = "command.issue"
 	CapabilityInteractionRequest Capability = "interaction.request"
 	CapabilityInteractionResolve Capability = "interaction.resolve"
+	CapabilityQueryIssue         Capability = "query.issue"
+	CapabilityQueryServe         Capability = "query.serve"
 	CapabilityThreadWrite        Capability = "thread.write"
 )
 
@@ -50,6 +52,8 @@ var eventTrustDomains = map[EventType][]TrustDomain{
 	EventDecisionRecord:      {TrustDomainTenant},
 	EventPermissionRequested: {TrustDomainTenant},
 	EventPermissionResolved:  {TrustDomainTenant, TrustDomainSaaSAttested},
+	EventQueryRequest:        {TrustDomainTenant, TrustDomainSaaSAttested},
+	EventQueryResult:         {TrustDomainTenant},
 	EventQuestionRequested:   {TrustDomainTenant},
 	EventQuestionResolved:    {TrustDomainTenant, TrustDomainSaaSAttested},
 	EventToolCall:            {TrustDomainTenant},
@@ -68,6 +72,8 @@ var eventCapabilities = map[EventType][]Capability{
 	EventDecisionRecord:      {CapabilityThreadWrite},
 	EventPermissionRequested: {CapabilityInteractionRequest},
 	EventPermissionResolved:  {CapabilityInteractionResolve},
+	EventQueryRequest:        {CapabilityQueryIssue},
+	EventQueryResult:         {CapabilityQueryServe},
 	EventQuestionRequested:   {CapabilityInteractionRequest},
 	EventQuestionResolved:    {CapabilityInteractionResolve},
 	EventToolCall:            {CapabilityThreadWrite},
@@ -86,6 +92,8 @@ var eventDurability = map[EventType]Durability{
 	EventDecisionRecord:      DurabilityJetStream,
 	EventPermissionRequested: DurabilityJetStream,
 	EventPermissionResolved:  DurabilityJetStream,
+	EventQueryRequest:        DurabilityCore,
+	EventQueryResult:         DurabilityCore,
 	EventQuestionRequested:   DurabilityJetStream,
 	EventQuestionResolved:    DurabilityJetStream,
 	EventToolCall:            DurabilityJetStream,

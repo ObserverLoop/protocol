@@ -17,6 +17,7 @@ func fullParams() SubjectParams {
 		AgentID:     "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e22",
 		ConductorID: "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e23",
 		CommandID:   "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e24",
+		QueryID:     "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e25",
 	}
 }
 
@@ -40,7 +41,7 @@ func TestSubjectForEveryEventType(t *testing.T) {
 func TestSubjectRoundTrip(t *testing.T) {
 	tokenSets := []SubjectParams{
 		fullParams(),
-		{TenantID: "a", WorkspaceID: "b", ThreadID: "c", AgentID: "d", ConductorID: "e", CommandID: "f"},
+		{TenantID: "a", WorkspaceID: "b", ThreadID: "c", AgentID: "d", ConductorID: "e", CommandID: "f", QueryID: "g"},
 		{
 			TenantID:    Identifier(strings.Repeat("t", IdentifierMaxLength)),
 			WorkspaceID: "0",
@@ -48,8 +49,9 @@ func TestSubjectRoundTrip(t *testing.T) {
 			AgentID:     "x-1",
 			ConductorID: "9",
 			CommandID:   "z",
+			QueryID:     "y",
 		},
-		{TenantID: "acme-eu-west-1", WorkspaceID: "team-platform", ThreadID: "thread-1", AgentID: "agent-1", ConductorID: "conductor-1", CommandID: "command-1"},
+		{TenantID: "acme-eu-west-1", WorkspaceID: "team-platform", ThreadID: "thread-1", AgentID: "agent-1", ConductorID: "conductor-1", CommandID: "command-1", QueryID: "query-1"},
 	}
 
 	for _, eventType := range AllEventTypes() {
@@ -101,7 +103,7 @@ func TestSubjectForRejectsOversizeSubject(t *testing.T) {
 	// Four maximum-length identifiers plus the literal segments exceed 255
 	// bytes. The builder must refuse, never truncate.
 	long := Identifier(strings.Repeat("x", IdentifierMaxLength))
-	params := SubjectParams{TenantID: long, WorkspaceID: long, ThreadID: long, ConductorID: long, CommandID: long, AgentID: long}
+	params := SubjectParams{TenantID: long, WorkspaceID: long, ThreadID: long, ConductorID: long, CommandID: long, AgentID: long, QueryID: long}
 
 	_, err := SubjectFor(EventCommandResult, params)
 	require.ErrorIs(t, err, ErrSubjectTooLong)

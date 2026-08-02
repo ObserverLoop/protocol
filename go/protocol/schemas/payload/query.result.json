@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/query.result.json",
+  "title": "query.result",
+  "description": "What a Conductor answers a query.request with. It carries the kind it is answering so that a client can read the shape without remembering what it asked, and it is core: an answer is request-scoped and is never retained, because the events it quotes are already retained once and redelivering an answer to a question nobody is still asking helps nobody.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["query_id", "kind", "status"],
+  "properties": {
+    "query_id": {
+      "description": "The request this answers, using the identifier the asker minted.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "kind": {
+      "description": "The kind that was asked, repeated. It selects which of the payload's answer fields is present.",
+      "enum": ["thread.history", "thread.list", "interaction.pending", "status"]
+    },
+    "status": {
+      "description": "ok carries an answer. error carries why there is none, and no partial answer beside it: half a page of history that does not say it is half is worse than a refusal.",
+      "enum": ["ok", "error"]
+    },
+    "error": {
+      "description": "Why the query was not answered. Required when status is error, as a failure with no cause is not a result.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": {
+          "description": "A stable machine-readable cause a client may branch on - for example unknown_thread, invalid_request, or unavailable.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "message": { "type": "string", "maxLength": 1024 }
+      }
+    },
+    "offset": {
+      "description": "The offset this page starts at, echoed so a client can tell an answer to its last request from an answer to an earlier one.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "limit": {
+      "description": "The page size that was applied, which is not always the one that was asked for. A responder bounds a page by bytes and not by count, because the count cannot bound it: one chat.message may carry a megabyte of text on its own, so a page of the requested size can be many times what a core NATS message will hold. It returns as many entries as fit, says how many that was here, and the client reads total to know there is more. An entry that does not fit alone is answered with status error and a code saying so - entry_too_large - because a client waiting for a page that can never be sent waits for ever.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "total": {
+      "description": "How many entries the whole answer holds, within the as_of bound when one was given. It is what lets a client know how far back a thread goes without walking to the end of it, and a page shorter than limit says the same thing at the end.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "events": {
+      "description": "The messages of one thread, newest first, as the envelopes that were published. Envelopes rather than rows read out of a projection, deliberately: the client verifies each one exactly as it verifies what arrives on the stream, so a compromised or merely wrong responder cannot invent a history that reads as evidence. maxItems is a structural ceiling and not the real bound - see limit, which the responder sets from what fits.",
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "../envelope.json" }
+    },
+    "threads": {
+      "description": "The threads of the workspace. The responder's own account rather than a signed original, because a thread's state is a projection it maintains and there is no envelope that carries it.",
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["thread_id", "state", "created_at", "updated_at"],
+        "properties": {
+          "thread_id": { "$ref": "../common.json#/$defs/identifier" },
+          "state": { "enum": ["created", "running", "idle", "closed"] },
+          "created_at": { "$ref": "../common.json#/$defs/timestamp" },
+          "updated_at": { "$ref": "../common.json#/$defs/timestamp" }
+        }
+      }
+    },
+    "interactions": {
+      "description": "What is waiting for a human. The same fields the interaction events publish, so a client that has followed the stream and a client that has just asked hold the same thing.",
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["interaction_id", "kind", "thread_id", "prompt", "on_timeout", "requested_at", "expires_at"],
+        "properties": {
+          "interaction_id": { "$ref": "../common.json#/$defs/identifier" },
+          "kind": { "enum": ["permission", "question"] },
+          "thread_id": { "$ref": "../common.json#/$defs/identifier" },
+          "prompt": {
+            "description": "The bounded, redacted rendering a human is shown. It is not the arguments; those are the field below.",
+            "type": "string",
+            "maxLength": 2048
+          },
+          "tool_name": { "type": "string", "maxLength": 128 },
+          "arguments": {
+            "description": "What the held call would do, bounded and redacted exactly as permission.requested carries it, because a human who cannot see it cannot decide.",
+            "type": "string",
+            "maxLength": 2048
+          },
+          "arguments_truncated": { "type": "boolean" },
+          "arguments_digest": { "$ref": "../common.json#/$defs/digest" },
+          "options": {
+            "description": "The fixed answers a question offers, when it offers any.",
+            "type": "array",
+            "maxItems": 16,
+            "items": { "type": "string", "maxLength": 256 }
+          },
+          "on_timeout": { "$ref": "../common.json#/$defs/on_timeout" },
+          "requested_at": { "$ref": "../common.json#/$defs/timestamp" },
+          "expires_at": { "$ref": "../common.json#/$defs/timestamp" },
+          "redacted": { "$ref": "../common.json#/$defs/redacted" }
+        }
+      }
+    },
+    "runtime": {
+      "description": "What the daemon is running. A client reads this instead of the runtime record file beside the database, which is the last thing standing between a client and needing no filesystem at all. It is not liveness evidence on its own - an answer arriving is.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspace_id", "epoch", "started_at"],
+      "properties": {
+        "workspace_id": { "$ref": "../common.json#/$defs/identifier" },
+        "epoch": { "type": "integer", "minimum": 0 },
+        "started_at": { "$ref": "../common.json#/$defs/timestamp" },
+        "harnesses": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "version"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1, "maxLength": 64 },
+              "version": { "type": "string", "minLength": 1, "maxLength": 64 }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "description": "A failure says why, and carries no answer beside it.",
+      "if": {
+        "required": ["status"],
+        "properties": { "status": { "const": "error" } }
+      },
+      "then": {
+        "required": ["error"],
+        "allOf": [
+          { "not": { "required": ["events"] } },
+          { "not": { "required": ["threads"] } },
+          { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["runtime"] } }
+        ]
+      },
+      "else": { "not": { "required": ["error"] } }
+    },
+    {
+      "description": "Each kind carries its own answer and no other, so a client reading the wrong field finds nothing rather than something that looks right.",
+      "if": {
+        "required": ["status", "kind"],
+        "properties": {
+          "status": { "const": "ok" },
+          "kind": { "const": "thread.history" }
+        }
+      },
+      "then": {
+        "required": ["events", "offset", "limit", "total"],
+        "allOf": [
+          { "not": { "required": ["threads"] } },
+          { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["runtime"] } }
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": ["status", "kind"],
+        "properties": {
+          "status": { "const": "ok" },
+          "kind": { "const": "thread.list" }
+        }
+      },
+      "then": {
+        "required": ["threads", "offset", "limit", "total"],
+        "allOf": [
+          { "not": { "required": ["events"] } },
+          { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["runtime"] } }
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": ["status", "kind"],
+        "properties": {
+          "status": { "const": "ok" },
+          "kind": { "const": "interaction.pending" }
+        }
+      },
+      "then": {
+        "required": ["interactions", "offset", "limit", "total"],
+        "allOf": [
+          { "not": { "required": ["events"] } },
+          { "not": { "required": ["threads"] } },
+          { "not": { "required": ["runtime"] } }
+        ]
+      }
+    },
+    {
+      "description": "status answers with one object and no page around it.",
+      "if": {
+        "required": ["status", "kind"],
+        "properties": {
+          "status": { "const": "ok" },
+          "kind": { "const": "status" }
+        }
+      },
+      "then": {
+        "required": ["runtime"],
+        "allOf": [
+          { "not": { "required": ["events"] } },
+          { "not": { "required": ["threads"] } },
+          { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["offset"] } },
+          { "not": { "required": ["limit"] } },
+          { "not": { "required": ["total"] } }
+        ]
+      }
+    }
+  ]
+}

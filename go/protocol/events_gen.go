@@ -12,9 +12,9 @@ type EventType string
 // root carries MAJOR only: an unknown MAJOR is rejected, an unknown MINOR is
 // accepted.
 const (
-	ProtocolVersion = "1.4"
+	ProtocolVersion = "1.5"
 	ProtocolMajor   = 1
-	ProtocolMinor   = 4
+	ProtocolMinor   = 5
 )
 
 const (
@@ -29,6 +29,8 @@ const (
 	EventDecisionRecord      EventType = "decision.record"
 	EventPermissionRequested EventType = "permission.requested"
 	EventPermissionResolved  EventType = "permission.resolved"
+	EventQueryRequest        EventType = "query.request"
+	EventQueryResult         EventType = "query.result"
 	EventQuestionRequested   EventType = "question.requested"
 	EventQuestionResolved    EventType = "question.resolved"
 	EventToolCall            EventType = "tool.call"
@@ -48,6 +50,8 @@ var eventTypes = []EventType{
 	EventDecisionRecord,
 	EventPermissionRequested,
 	EventPermissionResolved,
+	EventQueryRequest,
+	EventQueryResult,
 	EventQuestionRequested,
 	EventQuestionResolved,
 	EventToolCall,
@@ -67,6 +71,8 @@ var eventTypeSet = map[EventType]struct{}{
 	EventDecisionRecord:      {},
 	EventPermissionRequested: {},
 	EventPermissionResolved:  {},
+	EventQueryRequest:        {},
+	EventQueryResult:         {},
 	EventQuestionRequested:   {},
 	EventQuestionResolved:    {},
 	EventToolCall:            {},
@@ -87,6 +93,8 @@ var schemaPaths = map[EventType]string{
 	EventDecisionRecord:      "schemas/payload/decision.record.json",
 	EventPermissionRequested: "schemas/payload/permission.requested.json",
 	EventPermissionResolved:  "schemas/payload/permission.resolved.json",
+	EventQueryRequest:        "schemas/payload/query.request.json",
+	EventQueryResult:         "schemas/payload/query.result.json",
 	EventQuestionRequested:   "schemas/payload/question.requested.json",
 	EventQuestionResolved:    "schemas/payload/question.resolved.json",
 	EventToolCall:            "schemas/payload/tool.call.json",

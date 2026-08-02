@@ -18,6 +18,7 @@ const (
 	tokenAgentID     = "{agent_id}"
 	tokenConductorID = "{conductor_id}"
 	tokenCommandID   = "{command_id}"
+	tokenQueryID     = "{query_id}"
 	tokenType        = "{type}"
 )
 
@@ -30,6 +31,11 @@ type SubjectParams struct {
 	AgentID     Identifier
 	ConductorID Identifier
 	CommandID   Identifier
+	// QueryID keys a query result to the request it answers, as CommandID keys
+	// a command result to its command. A reader subscribes to the reply before
+	// it publishes the question, which is what lets a read use the subject
+	// grammar rather than an inbox convention of its own.
+	QueryID Identifier
 }
 
 // field returns a pointer to the parameter a template token names, so that the
@@ -48,6 +54,8 @@ func (p *SubjectParams) field(token string) *Identifier {
 		return &p.ConductorID
 	case tokenCommandID:
 		return &p.CommandID
+	case tokenQueryID:
+		return &p.QueryID
 	default:
 		return nil
 	}

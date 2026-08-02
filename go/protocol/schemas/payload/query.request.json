@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/query.request.json",
+  "title": "query.request",
+  "description": "A client asks a Conductor for state it holds. It is the read half of a protocol that could otherwise only write and follow: without it a client learns what threads exist, what is waiting for a human, and what was said in a thread by consuming the whole retained event stream and rebuilding all of it, at every start. One event type with a discriminated kind rather than one type per question, so that asking a new question later is a payload change and not a new subject.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["query_id", "kind"],
+  "properties": {
+    "query_id": {
+      "description": "Correlates this request with the query.result that answers it, and is the token in that result's subject. Minted by the asker, so it subscribes to the reply before it publishes the question.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "kind": {
+      "description": "What is being asked. thread.history is the messages of one thread, newest first. thread.list is the threads of the workspace. interaction.pending is what is waiting for a human. status is what the daemon is running, which is the last thing a client would otherwise have to read a file to learn.",
+      "enum": ["thread.history", "thread.list", "interaction.pending", "status"]
+    },
+    "thread_id": {
+      "description": "The thread whose messages are wanted. Required by thread.history and rejected by every other kind, so a request that names a thread it will not be answered about fails validation rather than being answered with something else.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "limit": {
+      "description": "How many entries to return. The bound is what keeps a reply inside one core NATS message; a client picks its own page size under it, and 25 is what the terminal client uses.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "offset": {
+      "description": "How many entries to skip. Absent means none, which is the newest page.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "as_of": {
+      "description": "Pins the page set to the events at or older than this one. Offsets over a newest-first list are not stable — every event that arrives shifts them, so a reader paging back through a live thread would see a message twice or not at all. A client sets this from the newest entry of its first page and keeps it for the whole scroll; what arrives after keeps arriving on the event stream, where it belongs.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["occurred_at", "event_id"],
+      "properties": {
+        "occurred_at": { "$ref": "../common.json#/$defs/timestamp" },
+        "event_id": { "$ref": "../common.json#/$defs/identifier" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "description": "thread.history is about one thread and must name it.",
+      "if": {
+        "required": ["kind"],
+        "properties": { "kind": { "const": "thread.history" } }
+      },
+      "then": { "required": ["thread_id"] },
+      "else": {
+        "allOf": [
+          { "not": { "required": ["thread_id"] } },
+          { "not": { "required": ["as_of"] } }
+        ]
+      }
+    },
+    {
+      "description": "status is one answer about one daemon. There is no page of it, so a request that asks for one is a misunderstanding worth refusing rather than ignoring.",
+      "if": {
+        "required": ["kind"],
+        "properties": { "kind": { "const": "status" } }
+      },
+      "then": {
+        "allOf": [
+          { "not": { "required": ["limit"] } },
+          { "not": { "required": ["offset"] } }
+        ]
+      }
+    }
+  ]
+}

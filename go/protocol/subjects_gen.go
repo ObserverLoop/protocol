@@ -7,19 +7,23 @@ package protocol
 type subjectClass string
 
 const (
-	subjectClassAudit            subjectClass = "audit"
-	subjectClassConductorCommand subjectClass = "conductor_command"
-	subjectClassConductorResult  subjectClass = "conductor_result"
-	subjectClassThread           subjectClass = "thread"
+	subjectClassAudit                subjectClass = "audit"
+	subjectClassConductorCommand     subjectClass = "conductor_command"
+	subjectClassConductorQuery       subjectClass = "conductor_query"
+	subjectClassConductorQueryResult subjectClass = "conductor_query_result"
+	subjectClassConductorResult      subjectClass = "conductor_result"
+	subjectClassThread               subjectClass = "thread"
 )
 
 // subjectTemplates is the subject grammar. {type} is always the final token
 // and is the only token that may contain a dot.
 var subjectTemplates = map[subjectClass]string{
-	subjectClassAudit:            "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.audit.{type}",
-	subjectClassConductorCommand: "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.command.{type}",
-	subjectClassConductorResult:  "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.result.{command_id}.{type}",
-	subjectClassThread:           "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.thread.{thread_id}.event.{type}",
+	subjectClassAudit:                "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.audit.{type}",
+	subjectClassConductorCommand:     "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.command.{type}",
+	subjectClassConductorQuery:       "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.query.{type}",
+	subjectClassConductorQueryResult: "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.query_result.{query_id}.{type}",
+	subjectClassConductorResult:      "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.conductor.{conductor_id}.result.{command_id}.{type}",
+	subjectClassThread:               "ol.v1.tenant.{tenant_id}.workspace.{workspace_id}.thread.{thread_id}.event.{type}",
 }
 
 var eventSubjectClasses = map[EventType]subjectClass{
@@ -34,6 +38,8 @@ var eventSubjectClasses = map[EventType]subjectClass{
 	EventDecisionRecord:      subjectClassThread,
 	EventPermissionRequested: subjectClassThread,
 	EventPermissionResolved:  subjectClassThread,
+	EventQueryRequest:        subjectClassConductorQuery,
+	EventQueryResult:         subjectClassConductorQueryResult,
 	EventQuestionRequested:   subjectClassThread,
 	EventQuestionResolved:    subjectClassThread,
 	EventToolCall:            subjectClassThread,

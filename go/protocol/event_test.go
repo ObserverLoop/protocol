@@ -31,7 +31,7 @@ func subjectMatches(binding, subject string) bool {
 
 func TestAllEventTypes(t *testing.T) {
 	types := AllEventTypes()
-	require.Len(t, types, 15, "the MVP registry defines fifteen event types")
+	require.Len(t, types, 17, "the MVP registry defines seventeen event types")
 
 	for i := 1; i < len(types); i++ {
 		require.Less(t, types[i-1], types[i], "AllEventTypes must be sorted")

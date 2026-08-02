@@ -1,0 +1,40 @@
+{
+  "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f04",
+  "conductor_epoch": 4,
+  "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+  "delegation_chain": [],
+  "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f13",
+  "event_type": "query.result",
+  "occurred_at": "2026-07-26T12:00:44.000Z",
+  "payload": {
+    "interactions": [
+      {
+        "arguments": "{\"command\":\"rm -rf /srv/app/cache\"}",
+        "arguments_digest": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+        "arguments_truncated": false,
+        "expires_at": "2026-07-26T13:00:36.000Z",
+        "interaction_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e84",
+        "kind": "permission",
+        "on_timeout": "deny",
+        "prompt": "bash command=rm (sha256:cdcd...)",
+        "requested_at": "2026-07-26T12:00:36.000Z",
+        "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+        "tool_name": "bash"
+      }
+    ],
+    "kind": "interaction.pending",
+    "limit": 25,
+    "offset": 0,
+    "query_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f84",
+    "status": "ok",
+    "total": 1
+  },
+  "protocol_version": "1.5",
+  "sequence": 44,
+  "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+  "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+  "tenant_id": "acme",
+  "trust_domain": "tenant",
+  "workspace_id": "platform"
+}
