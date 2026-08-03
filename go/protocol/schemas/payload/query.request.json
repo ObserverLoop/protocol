@@ -12,8 +12,8 @@
       "$ref": "../common.json#/$defs/identifier"
     },
     "kind": {
-      "description": "What is being asked. thread.history is the messages of one thread, newest first. thread.list is the threads of the workspace. interaction.pending is what is waiting for a human. status is what the daemon is running, which is the last thing a client would otherwise have to read a file to learn.",
-      "enum": ["thread.history", "thread.list", "interaction.pending", "status"]
+      "description": "What is being asked. thread.history is the messages of one thread, newest first. thread.list is the threads of the workspace. interaction.pending is what is waiting for a human. status is what the daemon is running, which is the last thing a client would otherwise have to read a file to learn. client.self is what this deployment makes of the key that is asking, which is the one question a client cannot answer from its own configuration.",
+      "enum": ["thread.history", "thread.list", "interaction.pending", "status", "client.self"]
     },
     "thread_id": {
       "description": "The thread whose messages are wanted. Required by thread.history and rejected by every other kind, so a request that names a thread it will not be answered about fails validation rather than being answered with something else.",
@@ -57,10 +57,10 @@
       }
     },
     {
-      "description": "status is one answer about one daemon. There is no page of it, so a request that asks for one is a misunderstanding worth refusing rather than ignoring.",
+      "description": "status is one answer about one daemon and client.self is one answer about one key. There is no page of either, so a request that asks for one is a misunderstanding worth refusing rather than ignoring.",
       "if": {
         "required": ["kind"],
-        "properties": { "kind": { "const": "status" } }
+        "properties": { "kind": { "enum": ["status", "client.self"] } }
       },
       "then": {
         "allOf": [

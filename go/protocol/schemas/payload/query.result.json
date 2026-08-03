@@ -13,7 +13,7 @@
     },
     "kind": {
       "description": "The kind that was asked, repeated. It selects which of the payload's answer fields is present.",
-      "enum": ["thread.history", "thread.list", "interaction.pending", "status"]
+      "enum": ["thread.history", "thread.list", "interaction.pending", "status", "client.self"]
     },
     "status": {
       "description": "ok carries an answer. error carries why there is none, and no partial answer beside it: half a page of history that does not say it is half is worse than a refusal.",
@@ -133,6 +133,55 @@
           }
         }
       }
+    },
+    "client": {
+      "description": "What this deployment makes of the key that asked. It is the one thing a client cannot learn from its own configuration: a key is enrolled, named, and permitted by the deployment, and any of that can change without the client hearing. A client shown a refusal reads this to find out whether it is still trusted.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "status"],
+      "properties": {
+        "key_id": {
+          "description": "The key that asked, echoed. A reply carries the key it is about so that it cannot be read as an answer about another one.",
+          "$ref": "../common.json#/$defs/key_id"
+        },
+        "status": {
+          "description": "accepted is a key this deployment trusts now. withdrawn is one it trusted and does not. unknown is one it has no record of - which an ordinary client never sees, because an envelope this deployment cannot verify is not answered at all, and a client must therefore report silence as silence rather than as a key that is not enrolled.",
+          "enum": ["accepted", "unknown", "withdrawn"]
+        },
+        "name": {
+          "description": "What the deployment calls this key. It is what an operator enrolled it as, and it is how a person tells one device from another in a listing.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "capabilities": {
+          "description": "What this key is permitted to do, as the capability tokens the registry declares. Not enumerated by this schema on purpose: the token set is generated from the registry and a copy here would be free to fall behind it.",
+          "type": "array",
+          "maxItems": 64,
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "enrolled_at": {
+          "description": "When this deployment first accepted the key.",
+          "$ref": "../common.json#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "description": "A key that is accepted is described in full. A key that is not carries its status and nothing else: what a deployment called a key it does not accept, and what it used to permit, is not an answer to what the key may do now.",
+          "if": {
+            "required": ["status"],
+            "properties": { "status": { "const": "accepted" } }
+          },
+          "then": { "required": ["name", "capabilities", "enrolled_at"] },
+          "else": {
+            "allOf": [
+              { "not": { "required": ["name"] } },
+              { "not": { "required": ["capabilities"] } },
+              { "not": { "required": ["enrolled_at"] } }
+            ]
+          }
+        }
+      ]
     }
   },
   "allOf": [
@@ -148,7 +197,8 @@
           { "not": { "required": ["events"] } },
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
-          { "not": { "required": ["runtime"] } }
+          { "not": { "required": ["runtime"] } },
+          { "not": { "required": ["client"] } }
         ]
       },
       "else": { "not": { "required": ["error"] } }
@@ -167,7 +217,8 @@
         "allOf": [
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
-          { "not": { "required": ["runtime"] } }
+          { "not": { "required": ["runtime"] } },
+          { "not": { "required": ["client"] } }
         ]
       }
     },
@@ -184,7 +235,8 @@
         "allOf": [
           { "not": { "required": ["events"] } },
           { "not": { "required": ["interactions"] } },
-          { "not": { "required": ["runtime"] } }
+          { "not": { "required": ["runtime"] } },
+          { "not": { "required": ["client"] } }
         ]
       }
     },
@@ -201,7 +253,8 @@
         "allOf": [
           { "not": { "required": ["events"] } },
           { "not": { "required": ["threads"] } },
-          { "not": { "required": ["runtime"] } }
+          { "not": { "required": ["runtime"] } },
+          { "not": { "required": ["client"] } }
         ]
       }
     },
@@ -220,6 +273,29 @@
           { "not": { "required": ["events"] } },
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["client"] } },
+          { "not": { "required": ["offset"] } },
+          { "not": { "required": ["limit"] } },
+          { "not": { "required": ["total"] } }
+        ]
+      }
+    },
+    {
+      "description": "client.self answers with one key and no page around it.",
+      "if": {
+        "required": ["status", "kind"],
+        "properties": {
+          "status": { "const": "ok" },
+          "kind": { "const": "client.self" }
+        }
+      },
+      "then": {
+        "required": ["client"],
+        "allOf": [
+          { "not": { "required": ["events"] } },
+          { "not": { "required": ["threads"] } },
+          { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["runtime"] } },
           { "not": { "required": ["offset"] } },
           { "not": { "required": ["limit"] } },
           { "not": { "required": ["total"] } }

@@ -1,5 +1,5 @@
 {
-  "version": "1.5",
+  "version": "1.6",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -190,6 +190,7 @@
         "query.issue"
       ],
       "fixtures": [
+        "fixtures/valid/query.request.client-self.json",
         "fixtures/valid/query.request.history.json",
         "fixtures/valid/query.request.status.json"
       ]
@@ -206,6 +207,9 @@
         "query.serve"
       ],
       "fixtures": [
+        "fixtures/valid/query.result.client-self.json",
+        "fixtures/valid/query.result.client-self.unknown.json",
+        "fixtures/valid/query.result.client-self.withdrawn.json",
         "fixtures/valid/query.result.error.json",
         "fixtures/valid/query.result.history.json",
         "fixtures/valid/query.result.interactions.json",
@@ -361,12 +365,20 @@
       "reason": "limit is bounded at 100 because the reply must fit inside one core NATS message; a request for more is refused rather than silently reduced"
     },
     {
+      "fixture": "fixtures/invalid/query-result-client-under-wrong-kind.json",
+      "reason": "each kind carries its own answer and no other; a status result holding a client would have a client read what the deployment is running as what the deployment makes of its key"
+    },
+    {
       "fixture": "fixtures/invalid/query-result-error-with-answer.json",
       "reason": "a result that failed carries no answer beside the failure; half a page that does not say it is half is worse than a refusal"
     },
     {
       "fixture": "fixtures/invalid/query-result-kind-mismatch.json",
       "reason": "each kind carries its own answer and no other; a thread.history result holding threads would have a client read the wrong field and find something that looks right"
+    },
+    {
+      "fixture": "fixtures/invalid/query-result-withdrawn-client-named.json",
+      "reason": "a key that is not accepted carries its status and nothing else; what a deployment called a key it no longer accepts, and what it used to permit, is not an answer to what that key may do now"
     },
     {
       "fixture": "fixtures/invalid/query-status-with-thread.json",

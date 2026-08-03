@@ -73,7 +73,30 @@
 # no delivery machinery to report that. A 1.5 client hears "this deployment does
 # not serve queries" and "the daemon is not there" as the same silence, and must
 # not present the second as the first.
-version: "1.5"
+#
+# 1.6 added the client.self query kind. A client could ask what a deployment
+# holds, and could not ask what the deployment makes of the client itself: what
+# it is called there, what it is allowed to do, and since when. That is the one
+# question a client cannot answer from its own configuration, because the answer
+# belongs to the deployment and can change without the client hearing.
+#
+# It is a value of the existing kind rather than a new event type, which is what
+# the discriminated union was for: no new subject class, no new capability, and a
+# key that may already ask may ask this.
+#
+# One limit is in the design rather than around it. An envelope a Conductor
+# cannot verify gets no reply at all — deliberately, because answering would tell
+# an unauthenticated sender what the deployment knows — so a key that was never
+# enrolled hears the same silence as a deployment that is not there. What this
+# kind can report is the state of a key that does verify. `unknown` is therefore
+# declared and, over the ordinary path, unreachable; a client must report silence
+# as silence rather than as "not enrolled".
+#
+# Additive. A 1.5 consumer never sends the kind and never reads the field, and a
+# 1.5 responder refuses a 1.6 client's client.self as an invalid request rather
+# than answering it wrongly, because the kind fails that responder's own
+# validation.
+version: "1.6"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and
