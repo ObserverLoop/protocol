@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
+  "version": "1.7",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -191,6 +191,7 @@
       ],
       "fixtures": [
         "fixtures/valid/query.request.client-self.json",
+        "fixtures/valid/query.request.harness-list.json",
         "fixtures/valid/query.request.history.json",
         "fixtures/valid/query.request.status.json"
       ]
@@ -211,9 +212,11 @@
         "fixtures/valid/query.result.client-self.unknown.json",
         "fixtures/valid/query.result.client-self.withdrawn.json",
         "fixtures/valid/query.result.error.json",
+        "fixtures/valid/query.result.harness-list.json",
         "fixtures/valid/query.result.history.json",
         "fixtures/valid/query.result.interactions.json",
         "fixtures/valid/query.result.status.json",
+        "fixtures/valid/query.result.threads.definition.json",
         "fixtures/valid/query.result.threads.json"
       ]
     },
@@ -357,6 +360,10 @@
       "reason": "redacted is a boolean, not prose. It is the flag that tells a reader the published arguments are not verbatim, and a consumer that had to interpret a string here could read a truthy \"no\""
     },
     {
+      "fixture": "fixtures/invalid/query-harness-list-with-limit.json",
+      "reason": "harness.list answers with the whole catalogue and no page around it; a request that asks for a page of it has misunderstood what it is asking, and a client that received half the harnesses would offer half the choice with nothing saying so"
+    },
+    {
       "fixture": "fixtures/invalid/query-history-without-thread.json",
       "reason": "kind thread.history must name the thread it asks about; without thread_id the request cannot be answered and must not be guessed at"
     },
@@ -371,6 +378,10 @@
     {
       "fixture": "fixtures/invalid/query-result-error-with-answer.json",
       "reason": "a result that failed carries no answer beside the failure; half a page that does not say it is half is worse than a refusal"
+    },
+    {
+      "fixture": "fixtures/invalid/query-result-harnesses-under-wrong-kind.json",
+      "reason": "each kind carries its own answer and no other; a status result holding the harness catalogue would have a client read what the daemon is running as what a thread may be opened on, and offer a choice that was never on offer"
     },
     {
       "fixture": "fixtures/invalid/query-result-kind-mismatch.json",

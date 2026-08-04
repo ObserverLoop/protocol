@@ -13,7 +13,7 @@
     },
     "kind": {
       "description": "The kind that was asked, repeated. It selects which of the payload's answer fields is present.",
-      "enum": ["thread.history", "thread.list", "interaction.pending", "status", "client.self"]
+      "enum": ["thread.history", "thread.list", "interaction.pending", "status", "client.self", "harness.list"]
     },
     "status": {
       "description": "ok carries an answer. error carries why there is none, and no partial answer beside it: half a page of history that does not say it is half is worse than a refusal.",
@@ -68,7 +68,19 @@
           "thread_id": { "$ref": "../common.json#/$defs/identifier" },
           "state": { "enum": ["created", "running", "idle", "closed"] },
           "created_at": { "$ref": "../common.json#/$defs/timestamp" },
-          "updated_at": { "$ref": "../common.json#/$defs/timestamp" }
+          "updated_at": { "$ref": "../common.json#/$defs/timestamp" },
+          "harness": {
+            "description": "What this thread's turns run on, when it was opened on a harness of its own. Absent means the deployment's own choice, which is what every thread opened before a client could choose has.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "model": {
+            "description": "The model this thread's turns run against, under the same rule as harness. The two travel together: a model is only meaningful beside the harness that answers for it.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
         }
       }
     },
@@ -182,6 +194,33 @@
           }
         }
       ]
+    },
+    "harnesses": {
+      "description": "What a thread may be opened on. It is the deployment's answer and not the client's: which harnesses are registered is decided by what the daemon was configured with and could prove at startup, and which models each one permits is decided by the operator's file. A client that guessed either would offer a choice the daemon then refuses, so it asks.",
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "version", "default_model", "models"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 64 },
+          "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+          "default_model": {
+            "description": "What a thread on this harness runs when it names no model. It is always one of models, so a client that offers the list and preselects this one cannot preselect something the daemon would refuse.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "models": {
+            "description": "Every model a thread on this harness may name. An operator who listed none gets the one default_model holds, because a choice of one is the honest rendering of a deployment that was told nothing: the alternative, an empty list, reads as a harness that can run nothing.",
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 64,
+            "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+          }
+        }
+      }
     }
   },
   "allOf": [
@@ -198,7 +237,8 @@
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
           { "not": { "required": ["runtime"] } },
-          { "not": { "required": ["client"] } }
+          { "not": { "required": ["client"] } },
+          { "not": { "required": ["harnesses"] } }
         ]
       },
       "else": { "not": { "required": ["error"] } }
@@ -218,7 +258,8 @@
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
           { "not": { "required": ["runtime"] } },
-          { "not": { "required": ["client"] } }
+          { "not": { "required": ["client"] } },
+          { "not": { "required": ["harnesses"] } }
         ]
       }
     },
@@ -236,7 +277,8 @@
           { "not": { "required": ["events"] } },
           { "not": { "required": ["interactions"] } },
           { "not": { "required": ["runtime"] } },
-          { "not": { "required": ["client"] } }
+          { "not": { "required": ["client"] } },
+          { "not": { "required": ["harnesses"] } }
         ]
       }
     },
@@ -254,7 +296,8 @@
           { "not": { "required": ["events"] } },
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["runtime"] } },
-          { "not": { "required": ["client"] } }
+          { "not": { "required": ["client"] } },
+          { "not": { "required": ["harnesses"] } }
         ]
       }
     },
@@ -274,6 +317,7 @@
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
           { "not": { "required": ["client"] } },
+          { "not": { "required": ["harnesses"] } },
           { "not": { "required": ["offset"] } },
           { "not": { "required": ["limit"] } },
           { "not": { "required": ["total"] } }
@@ -296,6 +340,30 @@
           { "not": { "required": ["threads"] } },
           { "not": { "required": ["interactions"] } },
           { "not": { "required": ["runtime"] } },
+          { "not": { "required": ["harnesses"] } },
+          { "not": { "required": ["offset"] } },
+          { "not": { "required": ["limit"] } },
+          { "not": { "required": ["total"] } }
+        ]
+      }
+    },
+    {
+      "description": "harness.list answers with the whole set and no page around it. A deployment registers what one daemon can run, which is a handful, so there is nothing to page through and an offset would only invite a client to ask for half of it.",
+      "if": {
+        "required": ["status", "kind"],
+        "properties": {
+          "status": { "const": "ok" },
+          "kind": { "const": "harness.list" }
+        }
+      },
+      "then": {
+        "required": ["harnesses"],
+        "allOf": [
+          { "not": { "required": ["events"] } },
+          { "not": { "required": ["threads"] } },
+          { "not": { "required": ["interactions"] } },
+          { "not": { "required": ["runtime"] } },
+          { "not": { "required": ["client"] } },
           { "not": { "required": ["offset"] } },
           { "not": { "required": ["limit"] } },
           { "not": { "required": ["total"] } }

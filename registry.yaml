@@ -96,7 +96,33 @@
 # 1.5 responder refuses a 1.6 client's client.self as an invalid request rather
 # than answering it wrongly, because the kind fails that responder's own
 # validation.
-version: "1.6"
+#
+# 1.7 added the harness.list query kind, and the harness and model a thread was
+# opened on to thread.list. A deployment could run more than one harness and a
+# client had no way to ask which, so every thread ran whatever the daemon was
+# started with. Choosing per thread needs two things a client cannot know: what
+# is registered here, which depends on what the daemon could prove at startup,
+# and which models the operator permitted for each, which is in a file the client
+# never reads.
+#
+# Another value of the existing kind, for the reason 1.6 gave. The answer carries
+# each harness's permitted models and the one a thread gets when it names none,
+# and the default is always in the list, so a client that preselects it cannot
+# preselect something the daemon then refuses. A harness whose operator listed no
+# models answers with the one it defaults to: a choice of one is the honest
+# rendering of a deployment that was told nothing, where an empty list would read
+# as a harness that can run nothing.
+#
+# The choice itself travels on thread.create, whose arguments this registry does
+# not constrain, so there is nothing here for it. What is here is the way back:
+# thread.list now carries the harness and model each thread holds, so a client
+# can show what a thread runs rather than what the deployment defaults to. Both
+# are optional, and absent means the deployment's own choice, which is what every
+# thread opened before this existed has.
+#
+# Additive. A 1.6 consumer never sends the kind, never reads the field, and
+# ignores two optional properties on a thread it already knew how to read.
+version: "1.7"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and
