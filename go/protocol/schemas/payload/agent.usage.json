@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.observerloop.com/ol/v1/payload/agent.usage.json",
+  "title": "agent.usage",
+  "description": "What one agent turn spent: the tokens it consumed, by accounting class, and what the harness said that cost. One event per turn, published when the turn ends, which is also the only point at which a cost is known. A harness that reports usage on every model round trip reports it cumulatively, so a consumer that added those up would count the same context once per message; this is the turn's own total and is safe to add across turns.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["agent_id"],
+  "properties": {
+    "agent_id": {
+      "description": "The agent process that ran the turn, using the identifier its agent.lifecycle events carry.",
+      "$ref": "../common.json#/$defs/identifier"
+    },
+    "input_tokens": {
+      "description": "Tokens sent to the model that were neither read from nor written to a cache. Absent when the harness reports no such count; it is never estimated, and absent is not zero.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "output_tokens": {
+      "description": "Tokens the model produced.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "cache_read_tokens": {
+      "description": "Tokens served from a prompt cache. Separate from input_tokens because they are billed differently, and a total that merged them would hide the whole benefit of caching.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "cache_write_5m_tokens": {
+      "description": "Tokens written to a prompt cache with the shorter time to live. A harness that reports one cache-write total and no breakdown has it attributed here, because that is the common default lifetime and dropping the tokens would understate what was really spent.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "cache_write_1h_tokens": {
+      "description": "Tokens written to a prompt cache with the longer time to live.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "cost_usd_micros": {
+      "description": "What the harness said the turn cost, in millionths of a United States dollar. An integer rather than a decimal because money in a floating-point number is a rounding error waiting for a budget to enforce. Absent when the harness reports no cost: a publisher never derives one from token counts and a price list it was not given.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "model": {
+      "description": "The model the turn ran on, as the harness named it. Absent when the harness did not say, and absent rather than guessed from the thread's definition, which is what was asked for and not necessarily what answered. A turn that involved more than one model carries the one the harness attributed the turn to.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    }
+  }
+}

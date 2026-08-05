@@ -12,13 +12,14 @@ type EventType string
 // root carries MAJOR only: an unknown MAJOR is rejected, an unknown MINOR is
 // accepted.
 const (
-	ProtocolVersion = "1.7"
+	ProtocolVersion = "1.8"
 	ProtocolMajor   = 1
-	ProtocolMinor   = 7
+	ProtocolMinor   = 8
 )
 
 const (
 	EventAgentLifecycle      EventType = "agent.lifecycle"
+	EventAgentUsage          EventType = "agent.usage"
 	EventAuditIncident       EventType = "audit.incident"
 	EventAuditSchema         EventType = "audit.schema"
 	EventAuditSecurity       EventType = "audit.security"
@@ -40,6 +41,7 @@ const (
 // eventTypes is sorted by token so that AllEventTypes is deterministic.
 var eventTypes = []EventType{
 	EventAgentLifecycle,
+	EventAgentUsage,
 	EventAuditIncident,
 	EventAuditSchema,
 	EventAuditSecurity,
@@ -61,6 +63,7 @@ var eventTypes = []EventType{
 // eventTypeSet backs ParseEventType.
 var eventTypeSet = map[EventType]struct{}{
 	EventAgentLifecycle:      {},
+	EventAgentUsage:          {},
 	EventAuditIncident:       {},
 	EventAuditSchema:         {},
 	EventAuditSecurity:       {},
@@ -83,6 +86,7 @@ var eventTypeSet = map[EventType]struct{}{
 // repository root and to the embedded schema filesystem alike.
 var schemaPaths = map[EventType]string{
 	EventAgentLifecycle:      "schemas/payload/agent.lifecycle.json",
+	EventAgentUsage:          "schemas/payload/agent.usage.json",
 	EventAuditIncident:       "schemas/payload/audit.incident.json",
 	EventAuditSchema:         "schemas/payload/audit.schema.json",
 	EventAuditSecurity:       "schemas/payload/audit.security.json",

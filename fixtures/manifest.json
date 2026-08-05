@@ -1,5 +1,5 @@
 {
-  "version": "1.7",
+  "version": "1.8",
   "events": [
     {
       "type": "agent.lifecycle",
@@ -15,6 +15,21 @@
       "fixtures": [
         "fixtures/valid/agent.lifecycle.idle.json",
         "fixtures/valid/agent.lifecycle.running.json"
+      ]
+    },
+    {
+      "type": "agent.usage",
+      "schema": "schemas/payload/agent.usage.json",
+      "subject_class": "thread",
+      "durability": "jetstream",
+      "trust_domains": [
+        "tenant"
+      ],
+      "capabilities": [
+        "thread.write"
+      ],
+      "fixtures": [
+        "fixtures/valid/agent.usage.json"
       ]
     },
     {
@@ -217,7 +232,8 @@
         "fixtures/valid/query.result.interactions.json",
         "fixtures/valid/query.result.status.json",
         "fixtures/valid/query.result.threads.definition.json",
-        "fixtures/valid/query.result.threads.json"
+        "fixtures/valid/query.result.threads.json",
+        "fixtures/valid/query.result.threads.metadata.json"
       ]
     },
     {

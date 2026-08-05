@@ -31,7 +31,7 @@ func subjectMatches(binding, subject string) bool {
 
 func TestAllEventTypes(t *testing.T) {
 	types := AllEventTypes()
-	require.Len(t, types, 17, "the MVP registry defines seventeen event types")
+	require.Len(t, types, 18, "the MVP registry defines eighteen event types")
 
 	for i := 1; i < len(types); i++ {
 		require.Less(t, types[i-1], types[i], "AllEventTypes must be sorted")
@@ -93,7 +93,7 @@ func TestAuthorizationTablesReturnCopies(t *testing.T) {
 
 func TestCheckProtocolVersion(t *testing.T) {
 	require.NoError(t, CheckProtocolVersion("1.0"))
-	require.NoError(t, CheckProtocolVersion("1.7"))
+	require.NoError(t, CheckProtocolVersion("1.8"))
 	require.ErrorIs(t, CheckProtocolVersion("2.0"), ErrUnsupportedMajor)
 	require.ErrorIs(t, CheckProtocolVersion("1"), ErrUnsupportedMajor)
 

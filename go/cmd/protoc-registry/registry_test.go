@@ -22,8 +22,8 @@ func TestLoadRegistry(t *testing.T) {
 	reg, err := loadRegistry(repoRoot(t))
 	require.NoError(t, err)
 
-	require.Equal(t, "1.7", reg.Version)
-	require.Len(t, reg.Events, 17, "the MVP registry defines seventeen event types")
+	require.Equal(t, "1.8", reg.Version)
+	require.Len(t, reg.Events, 18, "the MVP registry defines eighteen event types")
 
 	// Sorted by token, so generated output is deterministic.
 	for i := 1; i < len(reg.Events); i++ {

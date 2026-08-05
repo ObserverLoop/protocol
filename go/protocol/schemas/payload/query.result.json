@@ -80,6 +80,42 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 64
+          },
+          "title": {
+            "description": "What a person called this thread when they opened it. Absent means nobody named it, which is what every thread opened before a client could name one has, and a reader shows the identifier instead.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "description": {
+            "description": "What the thread is for, in the words of whoever opened it. Longer than the title and read in one place rather than on every row, which is why the two are separate properties and not one.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "metadata": {
+            "description": "Whatever else a client keeps about a thread. Open in its keys, because what a client wants to record is not this protocol's business, and bounded in its size, because this reply is signed and a payload with no ceiling is how a file reaches the wire. Values are strings: a nested document here would be a schema nobody validates.",
+            "type": "object",
+            "maxProperties": 32,
+            "propertyNames": { "minLength": 1, "maxLength": 64 },
+            "additionalProperties": { "type": "string", "maxLength": 512 }
+          },
+          "usage": {
+            "description": "What this thread has spent, added up over every turn it has run. The agent.usage events are the record and this is their total, carried here because a client evicts old rows and a total that shrinks as a reader scrolls is worse than no total. Absent when the thread has run no turn, or when its harness reports no accounting.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "input_tokens": { "type": "integer", "minimum": 0 },
+              "output_tokens": { "type": "integer", "minimum": 0 },
+              "cache_read_tokens": { "type": "integer", "minimum": 0 },
+              "cache_write_5m_tokens": { "type": "integer", "minimum": 0 },
+              "cache_write_1h_tokens": { "type": "integer", "minimum": 0 },
+              "cost_usd_micros": {
+                "description": "In millionths of a United States dollar, as agent.usage carries it.",
+                "type": "integer",
+                "minimum": 0
+              }
+            }
           }
         }
       }

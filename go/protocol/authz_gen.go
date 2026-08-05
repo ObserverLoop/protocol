@@ -42,6 +42,7 @@ const (
 
 var eventTrustDomains = map[EventType][]TrustDomain{
 	EventAgentLifecycle:      {TrustDomainTenant},
+	EventAgentUsage:          {TrustDomainTenant},
 	EventAuditIncident:       {TrustDomainTenant},
 	EventAuditSchema:         {TrustDomainTenant},
 	EventAuditSecurity:       {TrustDomainTenant},
@@ -62,6 +63,7 @@ var eventTrustDomains = map[EventType][]TrustDomain{
 
 var eventCapabilities = map[EventType][]Capability{
 	EventAgentLifecycle:      {CapabilityAgentLifecycle},
+	EventAgentUsage:          {CapabilityThreadWrite},
 	EventAuditIncident:       {CapabilityAuditWrite},
 	EventAuditSchema:         {CapabilityAuditWrite},
 	EventAuditSecurity:       {CapabilityAuditWrite},
@@ -82,6 +84,7 @@ var eventCapabilities = map[EventType][]Capability{
 
 var eventDurability = map[EventType]Durability{
 	EventAgentLifecycle:      DurabilityJetStream,
+	EventAgentUsage:          DurabilityJetStream,
 	EventAuditIncident:       DurabilityJetStream,
 	EventAuditSchema:         DurabilityJetStream,
 	EventAuditSecurity:       DurabilityJetStream,

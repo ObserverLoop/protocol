@@ -28,6 +28,7 @@ var subjectTemplates = map[subjectClass]string{
 
 var eventSubjectClasses = map[EventType]subjectClass{
 	EventAgentLifecycle:      subjectClassThread,
+	EventAgentUsage:          subjectClassThread,
 	EventAuditIncident:       subjectClassAudit,
 	EventAuditSchema:         subjectClassAudit,
 	EventAuditSecurity:       subjectClassAudit,

@@ -122,7 +122,40 @@
 #
 # Additive. A 1.6 consumer never sends the kind, never reads the field, and
 # ignores two optional properties on a thread it already knew how to read.
-version: "1.7"
+#
+# 1.8 added the agent.usage event, and what a thread is called, what it is for,
+# and what it has spent to thread.list.
+#
+# Usage was deliberately absent until now. The M1 spike found the harnesses
+# report token accounting too differently to freeze a schema on, so the numbers
+# were captured locally and published nowhere, and a person watching a thread
+# could not see what it cost. What settled the shape is that one harness reports
+# all five accounting classes and its own cost, and the five are the classes the
+# other two report a subset of; a harness that knows less sends less, which is
+# what the optional properties are for.
+#
+# One event per turn, and not one per model round trip. A harness that reports
+# usage on every assistant message reports it cumulatively, so a consumer adding
+# those up counts the same context once per message. The event is therefore the
+# turn's own total, which is also the only point at which a cost is known.
+#
+# thread.write, not a token of its own, for the reason tool.call gives below: a
+# new capability would have to be granted by every existing delegation before an
+# agent could record what it spent.
+#
+# The three thread.list properties are the other half. A thread had an
+# identifier and nothing a person chose, so a list of threads was a list of
+# identifiers; title and description are what a person calls it and what it is
+# for, and metadata is where a client keeps the rest. metadata is open in its
+# keys and bounded in its size — this stream is signed, replicated and retained,
+# and an unbounded object on it is how a file reaches the wire. usage is the
+# running total the events add up to, carried here because a client evicts old
+# rows and a total that shrinks as you scroll is worse than no total.
+#
+# Additive. A 1.7 consumer retains an event type it does not act on, which is
+# this registry's own rule for an unknown type, and ignores four optional
+# properties on a thread it already knew how to read.
+version: "1.8"
 
 # A subject class is a template. Every token in braces is a validated identifier
 # (protocol.ParseIdentifier), except {type}, which is the registry type token and
@@ -166,6 +199,16 @@ events:
     durability: jetstream
     trust_domains: [tenant]
     capabilities: [agent.lifecycle]
+
+  # What one turn spent. Agent-emitted thread content, so it carries
+  # thread.write like the other agent-emitted thread events, for the reason the
+  # tool pair gives below.
+  - type: agent.usage
+    schema: schemas/payload/agent.usage.json
+    subject_class: thread
+    durability: jetstream
+    trust_domains: [tenant]
+    capabilities: [thread.write]
 
   - type: audit.incident
     schema: schemas/payload/audit.incident.json

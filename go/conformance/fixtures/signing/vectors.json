@@ -62,6 +62,40 @@
     }
   },
   {
+    "name": "agent.usage",
+    "fixture": "fixtures/valid/agent.usage.json",
+    "event_type": "agent.usage",
+    "canonical_base64": "eyJjb3JyZWxhdGlvbl9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2UwMSIsImRlbGVnYXRpb25fY2hhaW4iOltdLCJldmVudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2Y4MSIsImV2ZW50X3R5cGUiOiJhZ2VudC51c2FnZSIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxNi4wMDBaIiwicGF5bG9hZCI6eyJhZ2VudF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MiIsImNhY2hlX3JlYWRfdG9rZW5zIjo4MTkyLCJjYWNoZV93cml0ZV8xaF90b2tlbnMiOjAsImNhY2hlX3dyaXRlXzVtX3Rva2VucyI6MTAyNCwiY29zdF91c2RfbWljcm9zIjozMTQwMCwiaW5wdXRfdG9rZW5zIjoxMjQwMCwibW9kZWwiOiJjbGF1ZGUtb3B1cy01Iiwib3V0cHV0X3Rva2VucyI6MTEwMH0sInByb3RvY29sX3ZlcnNpb24iOiIxLjgiLCJzZXF1ZW5jZSI6MTYsInNpZ25lcl9rZXlfaWQiOiJOWU01UkxSSkI2SzJCRDVSRVoyV1g3NUhEVlVMWEFXNUJBWUpSNkYzQ0xWT1lETjM3UVpRIiwic291cmNlX2FnZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkyIiwidGVuYW50X2lkIjoiYWNtZSIsInRocmVhZF9pZCI6IjAxOTFmN2I0LTNmMmEtN2MxZC05ZTg4LTJiNmE1ZDRjM2U5MCIsInRydXN0X2RvbWFpbiI6InRlbmFudCIsIndvcmtzcGFjZV9pZCI6InBsYXRmb3JtIn0=",
+    "canonical_sha256": "405e8d75a081e7ce2fed6052283e1b638d71b4104ea6bfa6fe8defb28d325216",
+    "signature": "C6mc0EcGUkO4WmjI4Y5wJRdCi0kyFV43qPOhy48CA8B3_TXFcP10yagyD0HlgDML_9H4gld7Gn5_ZncEx8ebDQ",
+    "envelope": {
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e01",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f81",
+      "event_type": "agent.usage",
+      "occurred_at": "2026-07-26T12:00:16.000Z",
+      "payload": {
+        "agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+        "cache_read_tokens": 8192,
+        "cache_write_1h_tokens": 0,
+        "cache_write_5m_tokens": 1024,
+        "cost_usd_micros": 31400,
+        "input_tokens": 12400,
+        "model": "claude-opus-5",
+        "output_tokens": 1100
+      },
+      "protocol_version": "1.8",
+      "sequence": 16,
+      "signature": "C6mc0EcGUkO4WmjI4Y5wJRdCi0kyFV43qPOhy48CA8B3_TXFcP10yagyD0HlgDML_9H4gld7Gn5_ZncEx8ebDQ",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_agent_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e92",
+      "tenant_id": "acme",
+      "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
     "name": "audit.incident",
     "fixture": "fixtures/valid/audit.incident.json",
     "event_type": "audit.incident",
@@ -1180,6 +1214,68 @@
       "protocol_version": "1.7",
       "sequence": 72,
       "signature": "r4-S3eyPih1AglwCj1dJxFXLrKAn6poxdVsCFC9dORLyziEAT-4Z_G_a4DvFOFx4Cbtpps9HiQ4Ic0w3lvAMCA",
+      "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
+      "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
+      "tenant_id": "acme",
+      "trust_domain": "tenant",
+      "workspace_id": "platform"
+    }
+  },
+  {
+    "name": "query.result.threads.metadata",
+    "fixture": "fixtures/valid/query.result.threads.metadata.json",
+    "event_type": "query.result",
+    "canonical_base64": "eyJjYXVzYXRpb25faWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNmMDMiLCJjb25kdWN0b3JfZXBvY2giOjQsImNvcnJlbGF0aW9uX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTA1IiwiZGVsZWdhdGlvbl9jaGFpbiI6W10sImV2ZW50X2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZjgyIiwiZXZlbnRfdHlwZSI6InF1ZXJ5LnJlc3VsdCIsIm9jY3VycmVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMToxNC4wMDBaIiwicGF5bG9hZCI6eyJraW5kIjoidGhyZWFkLmxpc3QiLCJsaW1pdCI6MjUsIm9mZnNldCI6MCwicXVlcnlfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNmOTYiLCJzdGF0dXMiOiJvayIsInRocmVhZHMiOlt7ImNyZWF0ZWRfYXQiOiIyMDI2LTA3LTI2VDEyOjAwOjEwLjAwMFoiLCJkZXNjcmlwdGlvbiI6IlRoZSBmb2xsb3cgdGVzdCBmYWlscyB3aGVuIHRoZSBjb25zdW1lciBpcyBjcmVhdGVkIGJlZm9yZSB0aGUgc3RyZWFtLiIsImhhcm5lc3MiOiJjbGF1ZGUiLCJtZXRhZGF0YSI6eyJpc3N1ZSI6Ik9MLTE0MiJ9LCJtb2RlbCI6ImNsYXVkZS1vcHVzLTUiLCJzdGF0ZSI6ImlkbGUiLCJ0aHJlYWRfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTAiLCJ0aXRsZSI6ImZpeCB0aGUgZmxha3kgdHJhbnNwb3J0IHRlc3QiLCJ1cGRhdGVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoxMi4wMDBaIiwidXNhZ2UiOnsiY2FjaGVfcmVhZF90b2tlbnMiOjgxOTIsImNhY2hlX3dyaXRlXzFoX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfNW1fdG9rZW5zIjoxMDI0LCJjb3N0X3VzZF9taWNyb3MiOjMxNDAwLCJpbnB1dF90b2tlbnMiOjEyNDAwLCJvdXRwdXRfdG9rZW5zIjoxMTAwfX0seyJjcmVhdGVkX2F0IjoiMjAyNi0wNy0yNlQxMjowMDoyMC4wMDBaIiwic3RhdGUiOiJjcmVhdGVkIiwidGhyZWFkX2lkIjoiMDE5MWY3YjQtM2YyYS03YzFkLTllODgtMmI2YTVkNGMzZTkxIiwidXBkYXRlZF9hdCI6IjIwMjYtMDctMjZUMTI6MDA6MjAuMDAwWiJ9XSwidG90YWwiOjJ9LCJwcm90b2NvbF92ZXJzaW9uIjoiMS44Iiwic2VxdWVuY2UiOjc0LCJzaWduZXJfa2V5X2lkIjoiTllNNVJMUkpCNksyQkQ1UkVaMldYNzVIRFZVTFhBVzVCQVlKUjZGM0NMVk9ZRE4zN1FaUSIsInNvdXJjZV9jb25kdWN0b3JfaWQiOiIwMTkxZjdiNC0zZjJhLTdjMWQtOWU4OC0yYjZhNWQ0YzNlOTMiLCJ0ZW5hbnRfaWQiOiJhY21lIiwidHJ1c3RfZG9tYWluIjoidGVuYW50Iiwid29ya3NwYWNlX2lkIjoicGxhdGZvcm0ifQ==",
+    "canonical_sha256": "f534ce671b495637ec876c846ba2f698f1776965f835a817e34db9c99feeeb7b",
+    "signature": "Te1uHh2zrQ2YUu2q63krIHpI19DfwpZtgxEdI1ux3XjnZx3OjUkUgsjr7yzkCoVzN2BLVlLof2GQsioZpy83BA",
+    "envelope": {
+      "causation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f03",
+      "conductor_epoch": 4,
+      "correlation_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e05",
+      "delegation_chain": [],
+      "event_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f82",
+      "event_type": "query.result",
+      "occurred_at": "2026-07-26T12:01:14.000Z",
+      "payload": {
+        "kind": "thread.list",
+        "limit": 25,
+        "offset": 0,
+        "query_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3f96",
+        "status": "ok",
+        "threads": [
+          {
+            "created_at": "2026-07-26T12:00:10.000Z",
+            "description": "The follow test fails when the consumer is created before the stream.",
+            "harness": "claude",
+            "metadata": {
+              "issue": "OL-142"
+            },
+            "model": "claude-opus-5",
+            "state": "idle",
+            "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e90",
+            "title": "fix the flaky transport test",
+            "updated_at": "2026-07-26T12:00:12.000Z",
+            "usage": {
+              "cache_read_tokens": 8192,
+              "cache_write_1h_tokens": 0,
+              "cache_write_5m_tokens": 1024,
+              "cost_usd_micros": 31400,
+              "input_tokens": 12400,
+              "output_tokens": 1100
+            }
+          },
+          {
+            "created_at": "2026-07-26T12:00:20.000Z",
+            "state": "created",
+            "thread_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e91",
+            "updated_at": "2026-07-26T12:00:20.000Z"
+          }
+        ],
+        "total": 2
+      },
+      "protocol_version": "1.8",
+      "sequence": 74,
+      "signature": "Te1uHh2zrQ2YUu2q63krIHpI19DfwpZtgxEdI1ux3XjnZx3OjUkUgsjr7yzkCoVzN2BLVlLof2GQsioZpy83BA",
       "signer_key_id": "NYM5RLRJB6K2BD5REZ2WX75HDVULXAW5BAYJR6F3CLVOYDN37QZQ",
       "source_conductor_id": "0191f7b4-3f2a-7c1d-9e88-2b6a5d4c3e93",
       "tenant_id": "acme",
